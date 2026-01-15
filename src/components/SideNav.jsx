@@ -294,7 +294,7 @@ export default function SideNav({ collapsed, drawerWidth, onToggle, prefersReduc
 
           return (
             <Box key={section.title}>
-              <Box sx={{ pl: 1, pr: 1, pt: 1 }}>
+              <Box sx={{ pl: 1, pr: 1 }}>
                 {!collapsed && (
                   <Typography
                     sx={{
@@ -308,7 +308,7 @@ export default function SideNav({ collapsed, drawerWidth, onToggle, prefersReduc
                   </Typography>
                 )}
 
-                <List disablePadding>
+                <List   >
                   {section.items.map((item) => {
                     const Icon = item.icon;
                     const isActive = location.pathname === item.to;
@@ -322,10 +322,6 @@ export default function SideNav({ collapsed, drawerWidth, onToggle, prefersReduc
                           justifyContent: collapsed ? "center" : "flex-start",
                           mb: 0.25,
                           bgcolor: isActive ? "rgba(111,83,255,0.22)" : "transparent",
-                          boxShadow: isActive
-                            ? `0 8px 18px rgba(0,0,0,0.18),
-                              inset 0 0 0 1px rgba(111,83,255,0.42)`
-                            : "none",
                           position: "relative",
                           overflow: "hidden",
                           "&:hover": {
@@ -364,7 +360,6 @@ export default function SideNav({ collapsed, drawerWidth, onToggle, prefersReduc
                             primaryTypographyProps={{
                               fontSize: 12,
                               color: "rgba(255,255,255,0.90)",
-                              fontWeight: isActive ? 600 : 500,
                             }}
                           />
                         )}
