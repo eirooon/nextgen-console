@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import ArcGeniusInsightsWidget from "../components/widgets/ArcGeniusInsightsWidgets.jsx";
 import OverallProtectionStatusWidget from "../components/widgets/OverallProtectionStatusWidget.jsx";
 import RecoveryConfidenceWidget from "../components/widgets/RecoveryConfidenceWidget.jsx";
