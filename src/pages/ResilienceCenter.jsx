@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import ArcGeniusInsightsWidget from "../components/widgets/ArcGeniusInsightsWidgets.jsx";
 import OverallProtectionStatusWidget from "../components/widgets/OverallProtectionStatusWidget.jsx";
@@ -9,7 +8,7 @@ import ThreatSignalsWidget from "../components/widgets/ThreatSignalsWidget.jsx";
 import PlatformVitalityAndComplianceWidget from "../components/widgets/PlatformVitalityAndComplianceWidget.jsx";
 import PlatformAssuranceWidget from "../components/widgets/PlatformAssuranceWidget.jsx";
 
-export default function Home() {
+export default function ResilienceCenter() {
   const arcGeniusInsightsData =
     "Most issues today are caused by agent connectivity. Updating agents and restarting 1 service will restore fulls protection";
   const overallProtectionStatusData = {
