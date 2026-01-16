@@ -283,7 +283,7 @@ export default function SideNav({
               mt: 1,
               ml: 2, // pushes it away from the sidebar edge (like your screenshot)
               width: 270,
-              borderRadius: 2,
+              borderRadius: 4,
               boxShadow: "0 5px 10px rgba(0,0,0,0.05)",
               overflow: "hidden",
             },

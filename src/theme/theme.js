@@ -76,7 +76,7 @@ export const theme = createTheme({
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          borderRadius: 4,
+          borderRadius: 8,
           paddingTop: 8,
           paddingBottom: 8,
         },
@@ -94,8 +94,9 @@ export const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 16,
           borderColor: "#eeeeee",
+          padding: "8px",
         },
       },
     },
