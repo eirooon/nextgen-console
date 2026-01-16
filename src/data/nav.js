@@ -11,7 +11,7 @@ import {
   NotificationAddOutlined,
   PublishedWithChangesOutlined,
   VerifiedUserOutlined,
-  Settings,
+  SettingsOutlined,
   HelpOutline,
 } from "@mui/icons-material";
 
@@ -72,7 +72,7 @@ export const navSections = [
   {
     title: "ADMIN & HELP",
     items: [
-      { label: "Settings", to: "/settings", icon: Settings },
+      { label: "Settings", to: "/settings", icon: SettingsOutlined },
       { label: "Help", to: "/help", icon: HelpOutline },
     ],
   },
@@ -91,7 +91,7 @@ export const routeMeta = navSections
     section.items.map((item) => ({
       path: item.to,
       label: item.label,
-      section: section.title, // e.g. "MONITOR"
+      section: section.title,
     }))
   )
   .reduce((acc, r) => {
@@ -100,6 +100,5 @@ export const routeMeta = navSections
   }, {});
 
 export function formatSectionTitle(title = "") {
-  // "OVERVIEW" -> "Overview", "REPORT & AUDIT" -> "Report & Audit"
   return title.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 }
