@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import AppShell from "./layout/AppShell";
 
-import Home from "./pages/Home";
+import ResilienceCenter from "./pages/ResilienceCenter";
 import Dashboard from "./pages/Dashboard";
 import Jobs from "./pages/Jobs";
 import EventLogs from "./pages/EventLogs";
@@ -16,12 +16,12 @@ import AuditLogs from "./pages/AuditLogs";
 import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 
-export default function App() {3
+export default function App() {
   return (
     <AppShell>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Navigate to="/resiliencecenter" replace />} />
+        <Route path="/resiliencecenter" element={<ResilienceCenter />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/event-logs" element={<EventLogs />} />
@@ -32,13 +32,11 @@ export default function App() {3
         <Route path="/disaster-recovery" element={<DisasterRecovery />} />
         <Route path="/alert-rules" element={<AlertRules />} />
         <Route path="/reports" element={<Reports />} />
-        <Route path="/audit-logs" element={<AuditLogs />} /> 
+        <Route path="/audit-logs" element={<AuditLogs />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/help" element={<Help />} />
-        <Route path="*" element={<Navigate to="/home" replace />} />
+        <Route path="*" element={<Navigate to="/resiliencecenter" replace />} />
       </Routes>
     </AppShell>
   );
 }
-
-

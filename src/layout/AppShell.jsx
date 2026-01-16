@@ -21,9 +21,15 @@ export default function AppShell({ children }) {
     () => (collapsed ? DRAWER_CLOSED : DRAWER_OPEN),
     [collapsed]
   );
-3
+
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "background.default" }}>
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        bgcolor: "background.default",
+      }}
+    >
       <SideNav
         collapsed={collapsed}
         drawerWidth={drawerWidth}
@@ -34,7 +40,7 @@ export default function AppShell({ children }) {
       {/* No ml here — Drawer already consumes width in the flex row */}
       <Box sx={{ flex: 1, minWidth: 0 }}>
         <AppHeader height={HEADER_H} />
-        <Box component="main" sx={{ p: 3, pt: 3 }}>
+        <Box component="main" sx={{ p: { xs: 2, md: 3 } }}>
           {children}
         </Box>
       </Box>

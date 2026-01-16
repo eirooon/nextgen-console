@@ -11,9 +11,9 @@ export default function AppBreadcrumbs() {
   const sectionLabel = formatSectionTitle(meta.section);
 
   return (
-    <Breadcrumbs aria-label="breadcrumb" sx={{ color: "rgba(0,0,0,0.55)"}}>
+    <Breadcrumbs aria-label="breadcrumb" sx={{ color: "rgba(0,0,0,0.55)" }}>
       {/* Level 1: section */}
-      <Typography sx={{ color: "rgba(0,0,0,0.45)", fontWeight: 400}}>
+      <Typography sx={{ color: "rgba(0,0,0,0.45)", fontWeight: 400 }}>
         {sectionLabel}
       </Typography>
 

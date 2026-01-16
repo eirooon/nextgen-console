@@ -7,7 +7,8 @@ export default function AuditLog() {
         Audit Log Content
       </Typography>
       <Typography color="text.secondary">
-        Main content area. Sidebar collapse/expand pushes this layout and persists.
+        Main content area. Sidebar collapse/expand pushes this layout and
+        persists.
       </Typography>
     </>
   );

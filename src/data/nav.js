@@ -1,10 +1,29 @@
-import { HomeOutlined, AssignmentIndOutlined, AssignmentOutlined, CorporateFareOutlined, EventNoteOutlined, FmdGoodOutlined, InsertChartOutlined, LibraryBooksOutlined, Monitor, NotificationAddOutlined, PublishedWithChangesOutlined, VerifiedUserOutlined, Settings, Help } from "@mui/icons-material";
+import {
+  LocalPoliceOutlined,
+  AssignmentIndOutlined,
+  AssignmentOutlined,
+  CorporateFareOutlined,
+  EventNoteOutlined,
+  FmdGoodOutlined,
+  InsertChartOutlined,
+  LibraryBooksOutlined,
+  Monitor,
+  NotificationAddOutlined,
+  PublishedWithChangesOutlined,
+  VerifiedUserOutlined,
+  Settings,
+  HelpOutline,
+} from "@mui/icons-material";
 
 export const navSections = [
   {
-    title: "OVERVIEW",
+    title: "MONITOR",
     items: [
-      { label: "Home", to: "/home", icon: HomeOutlined },
+      {
+        label: "Resilience Center",
+        to: "/resiliencecenter",
+        icon: LocalPoliceOutlined,
+      },
       { label: "Dashboard", to: "/dashboard", icon: InsertChartOutlined },
     ],
   },
@@ -20,15 +39,27 @@ export const navSections = [
     items: [
       { label: "Sources", to: "/sources", icon: Monitor },
       { label: "Destinations", to: "/destinations", icon: FmdGoodOutlined },
-      { label: "Infrastructures", to: "/infrastructures", icon: CorporateFareOutlined },
+      {
+        label: "Infrastructures",
+        to: "/infrastructures",
+        icon: CorporateFareOutlined,
+      },
     ],
   },
   {
     title: "CONFIGURE PROTECTION",
     items: [
       { label: "Policies", to: "/policies", icon: VerifiedUserOutlined },
-      { label: "Disaster Recovery", to: "/disaster-recovery", icon: PublishedWithChangesOutlined },
-      { label: "Alert Rules", to: "/alert-rules", icon: NotificationAddOutlined },
+      {
+        label: "Disaster Recovery",
+        to: "/disaster-recovery",
+        icon: PublishedWithChangesOutlined,
+      },
+      {
+        label: "Alert Rules",
+        to: "/alert-rules",
+        icon: NotificationAddOutlined,
+      },
     ],
   },
   {
@@ -42,7 +73,7 @@ export const navSections = [
     title: "ADMIN & HELP",
     items: [
       { label: "Settings", to: "/settings", icon: Settings },
-      { label: "Help", to: "/help", icon: Help },
+      { label: "Help", to: "/help", icon: HelpOutline },
     ],
   },
 ];
@@ -60,7 +91,7 @@ export const routeMeta = navSections
     section.items.map((item) => ({
       path: item.to,
       label: item.label,
-      section: section.title, // e.g. "OVERVIEW"
+      section: section.title, // e.g. "MONITOR"
     }))
   )
   .reduce((acc, r) => {
@@ -68,9 +99,7 @@ export const routeMeta = navSections
     return acc;
   }, {});
 
-  export function formatSectionTitle(title = "") {
+export function formatSectionTitle(title = "") {
   // "OVERVIEW" -> "Overview", "REPORT & AUDIT" -> "Report & Audit"
-  return title
-    .toLowerCase()
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+  return title.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 }

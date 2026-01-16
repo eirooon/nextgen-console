@@ -6,30 +6,39 @@ export const ARC_ACCENT = "#6f53ff";
 export const theme = createTheme({
   palette: {
     mode: "light",
-    primary: { main: ARC_ACCENT },
     background: { default: "#f6f7fb", paper: "#ffffff" },
-    text: { primary: "#111827", secondary: "rgba(0,0,0,0.6)" },
+    primary: {
+      light: "#BB86FC",
+      main: "#8A2BFF",
+      dark: "#640FCD",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#66C8E9",
+      main: "#00729A",
+      dark: "#0A5F7C",
+      contrastText: "#FFFFFF",
+    },
   },
-  shape: { borderRadius: 12 },
   typography: {
-  fontFamily: [
-    "Inter",
-    "ui-sans-serif",
-    "system-ui",
-    "-apple-system",
-    '"Segoe UI"',
-    "Roboto",
-    "Helvetica",
-    "Arial",
-  ].join(","),
+    fontFamily: [
+      "Inter",
+      "ui-sans-serif",
+      "system-ui",
+      "-apple-system",
+      '"Segoe UI"',
+      "Roboto",
+      "Helvetica",
+      "Arial",
+    ].join(","),
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        body: { 
-          backgroundColor: "#F6F8FC",
-          fontFamily: "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
-         },
+        body: {
+          fontFamily:
+            "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+        },
         "@media (prefers-reduced-motion: reduce)": {
           "*": {
             animationDuration: "0.01ms !important",
@@ -40,7 +49,6 @@ export const theme = createTheme({
         },
       },
     },
-
 
     // Header glass effect
     MuiAppBar: {
@@ -68,7 +76,7 @@ export const theme = createTheme({
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
+          borderRadius: 4,
           paddingTop: 8,
           paddingBottom: 8,
         },
@@ -79,6 +87,42 @@ export const theme = createTheme({
       styleOverrides: {
         tooltip: {
           borderRadius: 6,
+        },
+      },
+    },
+
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          borderColor: "#eeeeee",
+        },
+      },
+    },
+    MuiCardHeader: {
+      styleOverrides: {
+        root: {
+          paddingBottom: "0px",
+        },
+        title: {
+          fontWeight: 600,
+          fontSize: 20,
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          "&:last-child": {
+            paddingBottom: 16, // set whatever you want
+          },
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
         },
       },
     },
