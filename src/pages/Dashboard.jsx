@@ -9,6 +9,7 @@ import JobHealthTimelineWidget from "../components/widgets/JobHealthTimelineWidg
 import IncidentClustersWidget from "../components/widgets/IncidentClustersWidget";
 
 export default function Dashboard({ data }) {
+  const passedData = data + "Content displayed here.";
   return (
     <Box sx={{ width: "100%" }}>
       <Grid container spacing={2} columns={16}>
@@ -21,16 +22,16 @@ export default function Dashboard({ data }) {
         <Grid size={{ xs: 16, md: 8, lg: 8 }}>
           <Grid container spacing={2}>
             <Grid size={16}>
-              <RestoreVerificationWidget data={"Content displayed here."} />
+              <RestoreVerificationWidget data={passedData} />
             </Grid>
             <Grid size={16}>
-              <CapacityWatchWidget data={"Content displayed here."} />
+              <CapacityWatchWidget data={passedData} />
             </Grid>
             <Grid size={16}>
-              <LiveOperationsAndAuditWidget data={"Content displayed here."} />
+              <LiveOperationsAndAuditWidget data={passedData} />
             </Grid>
             <Grid size={16}>
-              <IncidentClustersWidget data={"Content displayed here."} />
+              <IncidentClustersWidget data={passedData} />
             </Grid>
           </Grid>
         </Grid>

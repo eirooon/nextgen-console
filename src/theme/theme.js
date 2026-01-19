@@ -115,7 +115,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           "&:last-child": {
-            paddingBottom: 16, // set whatever you want
+            paddingBottom: 16,
           },
         },
       },
