@@ -1,7 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
 export const ARC_NAV_BG = "#001A70";
-export const ARC_ACCENT = "#6f53ff";
 
 export const theme = createTheme({
   palette: {
@@ -55,7 +54,6 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           background: "transparent",
-          backdropFilter: "blur(10px)",
           boxShadow: "none",
         },
       },
@@ -124,6 +122,25 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontSize: "14px",
+        },
+      },
+    },
+
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          border: "none",
+          height: "calc(100vh - 137px)",
+        },
+        filler: {
+          bgColor: "#333",
         },
       },
     },

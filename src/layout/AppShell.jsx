@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 import { Box } from "@mui/material";
-import SideNav from "../components/SideNav";
+import AppNavigation from "../components/AppNavigation";
 import AppHeader from "../components/AppHeader";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
+import { headerStyleMap } from "../theme/headerStyleMap";
+import { useLocation } from "react-router-dom";
 
 const DRAWER_OPEN = 230;
 const DRAWER_CLOSED = 56;
@@ -22,6 +24,10 @@ export default function AppShell({ children }) {
     [collapsed]
   );
 
+  const location = useLocation();
+
+  const headerSx = headerStyleMap[location.pathname] || headerStyleMap["*"];
+
   return (
     <Box
       sx={{
@@ -30,7 +36,7 @@ export default function AppShell({ children }) {
         bgcolor: "background.default",
       }}
     >
-      <SideNav
+      <AppNavigation
         collapsed={collapsed}
         drawerWidth={drawerWidth}
         onToggle={() => setCollapsed(!collapsed)}
@@ -39,10 +45,8 @@ export default function AppShell({ children }) {
 
       {/* No ml here — Drawer already consumes width in the flex row */}
       <Box sx={{ flex: 1, minWidth: 0 }}>
-        <AppHeader height={HEADER_H} />
-        <Box component="main" sx={{ p: { xs: 2, md: 3 } }}>
-          {children}
-        </Box>
+        <AppHeader height={HEADER_H} sx={headerSx} />
+        <Box component="main">{children}</Box>
       </Box>
     </Box>
   );

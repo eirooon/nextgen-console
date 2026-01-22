@@ -2,9 +2,17 @@ import { AppBar, Toolbar, Button, IconButton, Box } from "@mui/material";
 import { AutoAwesomeRounded, Notifications } from "@mui/icons-material";
 import AppBreadcrumbs from "./AppBreadcrumbs";
 
-export default function AppHeader({ height = 64 }) {
+export default function AppHeader({ height = 64, sx }) {
   return (
-    <AppBar position="sticky" sx={{ height }}>
+    <AppBar
+      position="sticky"
+      sx={{
+        height,
+        boxShadow: "none",
+        background: "transparent",
+        ...sx,
+      }}
+    >
       <Toolbar
         sx={{
           minHeight: height,

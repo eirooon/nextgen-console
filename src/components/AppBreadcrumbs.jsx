@@ -1,26 +1,62 @@
-import { Breadcrumbs, Link, Typography } from "@mui/material";
-import { NavLink, useLocation } from "react-router-dom";
-import { routeMeta, formatSectionTitle } from "../data/nav";
+import React from "react";
+import { Breadcrumbs, Typography, Link } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { buildRouteRegistry } from "../routes/routeRegistry";
+import { getBreadcrumbTrail } from "../routes/getBreadcrumbTrail";
+import { subRoutes } from "../routes/subRoutes";
+
+const registry = buildRouteRegistry({ subRoutes });
 
 export default function AppBreadcrumbs() {
-  const location = useLocation();
-  const meta = routeMeta[location.pathname];
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
-  if (!meta) return null;
-
-  const sectionLabel = formatSectionTitle(meta.section);
+  const trail = getBreadcrumbTrail(pathname, registry);
+  if (!trail.length) return null;
 
   return (
-    <Breadcrumbs aria-label="breadcrumb" sx={{ color: "rgba(0,0,0,0.55)" }}>
-      {/* Level 1: section */}
-      <Typography sx={{ color: "rgba(0,0,0,0.45)", fontWeight: 400 }}>
-        {sectionLabel}
-      </Typography>
+    <Breadcrumbs aria-label="breadcrumb">
+      {trail.map((crumb, idx) => {
+        const isLast = idx === trail.length - 1;
 
-      {/* Level 2: current page */}
-      <Typography sx={{ color: "rgba(0,0,0,0.85)", fontWeight: 500 }}>
-        {meta.label}
-      </Typography>
+        // For "virtual section nodes", don't navigate
+        const isSection = crumb.path.startsWith("__section__/");
+
+        if (isLast) {
+          return (
+            <Typography
+              key={crumb.path}
+              sx={{
+                fontSize: 16,
+                fontWeight: 500,
+                color: "#000",
+              }}
+            >
+              {crumb.label}
+            </Typography>
+          );
+        }
+
+        return (
+          <Link
+            key={crumb.path}
+            component="button"
+            underline="hover"
+            onClick={() => {
+              if (!isSection) navigate(crumb.path);
+            }}
+            sx={{
+              fontSize: 16,
+              color: "text.secondary",
+              fontWeight: 500,
+              cursor: isSection ? "default" : "pointer",
+            }}
+          >
+            {crumb.label}
+          </Link>
+        );
+      })}
     </Breadcrumbs>
   );
 }
