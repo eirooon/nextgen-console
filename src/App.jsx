@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes, Outlet } from "react-router-dom";
 import AppShell from "./layout/AppShell";
 
-import ResilienceCenter from "./pages/resiliencecenter/ResilienceCenter";
-import Dashboard from "./pages/dashboard/Dashboard";
+import ResilienceCenter from "./pages/resiliencecenter/ResilienceCenterLayout";
+import Dashboard from "./pages/dashboard/DashboardLayout";
 import Jobs from "./pages/jobs/Jobs";
 import EventLogs from "./pages/eventlogs/EventLogs";
 import Infrastructures from "./pages/infrastructures/Infrastructures";

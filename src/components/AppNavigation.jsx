@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
+
 import {
   Box,
   Drawer,
@@ -14,6 +15,8 @@ import {
   Avatar,
   Popover,
   Collapse,
+  Chip,
+  Switch,
 } from "@mui/material";
 
 import {
@@ -21,11 +24,15 @@ import {
   UnfoldMore,
   KeyboardDoubleArrowLeftRounded,
   KeyboardDoubleArrowRightRounded,
-  Person,
-  ChevronRightOutlined,
   CloudUpload,
   HelpRounded,
   ExpandMore,
+
+  // add these:
+  DarkModeOutlined,
+  TranslateOutlined,
+  LogoutOutlined,
+  PersonOutlineOutlined,
 } from "@mui/icons-material";
 
 import { navSections } from "../data/nav";
@@ -112,6 +119,32 @@ export default function AppNavigation({
     ? "none"
     : "220ms cubic-bezier(0.2, 0, 0, 1)";
 
+  // --- Profile menu ---
+  const user = React.useMemo(
+    () => ({
+      name: "Erron Sevilla",
+      email: "erron@arcserve.com",
+      initials: "ES",
+      planLabel: "Pro",
+      version: "v1.5.69",
+    }),
+    []
+  );
+
+  const [profileAnchorEl, setProfileAnchorEl] = React.useState(null);
+  const profileMenuOpen = Boolean(profileAnchorEl);
+
+  const openProfileMenu = React.useCallback((e) => {
+    setProfileAnchorEl(e.currentTarget);
+  }, []);
+
+  const closeProfileMenu = React.useCallback(() => {
+    setProfileAnchorEl(null);
+  }, []);
+
+  // Dark mode switch (wire this to your theme later if needed)
+  const [darkMode, setDarkMode] = React.useState(false);
+
   return (
     <Drawer
       variant="permanent"
@@ -130,9 +163,9 @@ export default function AppNavigation({
       {/* Define gradient ONCE */}
       <svg width={0} height={0} style={{ position: "absolute" }}>
         <linearGradient id="mainGradient" x1="100%" y1="100%" x2="20%" y2="10%">
-          <stop offset="0%" stopColor="#8A2BFF" />
-          <stop offset="36%" stopColor="#5957F4" />
-          <stop offset="100%" stopColor="#00A7E1" />
+          <stop offset="10%" stopColor="#a335d2" />
+          {/* <stop offset="60%" stopColor="#0d3dc2" /> */}
+          <stop offset="80%" stopColor="#3ac1ee" />
         </linearGradient>
       </svg>
 
@@ -272,6 +305,7 @@ export default function AppNavigation({
                 >
                   <Typography
                     fontSize={12}
+                    fontWeight={500}
                     sx={{
                       color: "rgba(255,255,255,0.92)",
                       whiteSpace: "nowrap",
@@ -312,6 +346,7 @@ export default function AppNavigation({
           </Tooltip>
         </Box>
 
+        {/*Product Switcher Popover*/}
         <Popover
           open={productMenuOpen}
           anchorEl={productAnchorEl}
@@ -320,69 +355,85 @@ export default function AppNavigation({
           transformOrigin={{ vertical: "center", horizontal: "left" }}
           PaperProps={{
             sx: {
-              mt: 1,
-              ml: 2,
-              width: 270,
-              borderRadius: 4,
-              boxShadow: "0 5px 10px rgba(0,0,0,0.05)",
+              width: 300,
+              borderRadius: 3,
+              boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
               overflow: "hidden",
+              p: 1,
             },
           }}
         >
-          <Box sx={{ p: 1, bgcolor: "background.paper" }}>
-            <List disablePadding>
-              {productOptions.map((p) => {
-                const selected = p.id === activeProduct;
+          {/* Optional footer line like profile */}
+          <Box sx={{ px: 1, pb: 1, pt: 1 }}>
+            <Typography sx={{ fontSize: 12, color: "rgba(0,0,0,0.35)" }}>
+              Switch Product
+            </Typography>
+          </Box>
+          {/* Menu items (same row density / icon sizing) */}
+          <List disablePadding>
+            {productOptions.map((p, idx) => {
+              const selected = p.id === activeProduct;
 
-                return (
+              return (
+                <React.Fragment key={p.id}>
                   <ListItemButton
-                    key={p.id}
+                    sx={{ py: 1 }}
                     onClick={() => {
                       setActiveProduct(p.id);
                       closeProductMenu();
                     }}
-                    sx={{
-                      mb: 0.25,
-                      p: 1.25,
-                      gap: 1.5,
-                      bgcolor: selected
-                        ? "rgba(111,83,255,0.12)"
-                        : "transparent",
-                      "&:hover": {
-                        bgcolor: selected
-                          ? "rgba(111,83,255,0.14)"
-                          : "rgba(0,0,0,0.04)",
-                      },
-                    }}
                   >
-                    <Box
+                    <ListItemIcon
                       sx={{
-                        width: 24,
-                        height: 24,
-                        borderRadius: 2,
-                        display: "grid",
-                        placeItems: "center",
+                        minWidth: 32,
+                        color: selected ? "#6f53ff" : "rgba(0,0,0,0.45)",
                       }}
                     >
-                      {p.icon}
-                    </Box>
+                      <Box
+                        sx={{
+                          width: 24,
+                          height: 24,
+                          borderRadius: 2,
+                          display: "grid",
+                          placeItems: "center",
+                        }}
+                      >
+                        {p.icon}
+                      </Box>
+                    </ListItemIcon>
 
                     <ListItemText
                       primary={p.label}
                       primaryTypographyProps={{
                         fontSize: 12,
-                        color: selected ? "#6f53ff" : "rgba(0,0,0,0.82)",
+                        fontWeight: 500,
+                        color: "rgba(0,0,0,0.70)",
                       }}
                     />
+
+                    {selected && (
+                      <Chip
+                        label="Active"
+                        size="small"
+                        sx={{
+                          height: 20,
+                          fontSize: 11,
+                          bgcolor: "rgba(111,83,255,0.12)",
+                          color: "#6f53ff",
+                        }}
+                      />
+                    )}
                   </ListItemButton>
-                );
-              })}
-            </List>
-          </Box>
+
+                  {idx !== productOptions.length - 1}
+                </React.Fragment>
+              );
+            })}
+          </List>
         </Popover>
       </Box>
 
-      <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />
+      <Divider sx={{ borderColor: "rgba(255,255,255,0.15)" }} />
 
       {/* Sections */}
       <Box sx={{ flex: 1, overflow: "auto" }}>
@@ -452,7 +503,8 @@ export default function AppNavigation({
                             justifyContent: collapsed ? "center" : "flex-start",
                             pt: 0.75,
                             pb: 0.75,
-                            mt: 0.5,
+                            mt: 1,
+                            mb: 1,
                             position: "relative",
                             overflow: "hidden",
                             borderRadius: 1.25,
@@ -477,7 +529,11 @@ export default function AppNavigation({
                               placeItems: "center",
                             }}
                           >
-                            <Icon sx={{ fill: "url(#mainGradient)" }} />
+                            <Icon
+                              sx={{
+                                fill: "url(#mainGradient)",
+                              }}
+                            />
                           </ListItemIcon>
 
                           {!collapsed && (
@@ -485,6 +541,7 @@ export default function AppNavigation({
                               primary={item.label}
                               primaryTypographyProps={{
                                 fontSize: 12,
+                                fontWeight: "500",
                                 color: "rgba(255,255,255,0.90)",
                               }}
                             />
@@ -510,83 +567,298 @@ export default function AppNavigation({
 
               {/* Divider between sections ONLY (not after the last one) */}
               {collapsed && !isLast && (
-                <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />
+                <Divider sx={{ borderColor: "rgba(255,255,255,0.15)" }} />
               )}
             </Box>
           );
         })}
       </Box>
 
-      <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />
+      <Divider sx={{ borderColor: "rgba(255,255,255,0.15)" }} />
 
-      {/* Profile */}
+      {/*Profile*/}
       <Box
         sx={{
-          p: 1.75,
-          display: "flex",
-          flexDirection: collapsed ? "column" : "row",
-          alignItems: "center",
-          justifyContent: collapsed ? "center" : "space-between",
-          gap: collapsed ? 1 : 0,
+          p: 1.25,
           width: "100%",
         }}
       >
-        <Box sx={{ width: "100%" }}>
-          {collapsed ? (
-            <Box
-              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
-            >
-              <Avatar
-                sx={{
-                  width: 28,
-                  height: 28,
-                  bgcolor: "#D6F4FF",
-                  color: "#00A7E1",
-                }}
+        {/* Footer profile row (click to open) */}
+        {collapsed ? (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Tooltip title={`${user.name} (${user.email})`} placement="right">
+              <IconButton
+                onClick={openProfileMenu}
+                sx={{ p: 0.5 }}
+                aria-label="Open profile menu"
               >
-                <Person fontSize="small" />
-              </Avatar>
-            </Box>
-          ) : (
+                <Avatar
+                  sx={{
+                    width: 34,
+                    height: 34,
+                    bgcolor: "rgba(255,255,255,0.16)",
+                    color: "rgba(255,255,255,0.92)",
+                    fontSize: 12,
+                    fontWeight: 700,
+                  }}
+                >
+                  {user.initials}
+                </Avatar>
+              </IconButton>
+            </Tooltip>
+          </Box>
+        ) : (
+          <Box
+            onClick={openProfileMenu}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") openProfileMenu(e);
+            }}
+            sx={{
+              cursor: "pointer",
+              borderRadius: 2,
+              px: 1,
+              py: 0.9,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 1,
+              "&:hover": { bgcolor: "rgba(255,255,255,0.06)" },
+            }}
+            aria-label="Open profile menu"
+          >
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
+                gap: 1.25,
+                minWidth: 0,
               }}
             >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
-                <Avatar
+              <Avatar
+                sx={{
+                  width: 38,
+                  height: 38,
+                  bgcolor: "rgba(255,255,255,0.16)",
+                  color: "rgba(255,255,255,0.92)",
+                  fontSize: 16,
+                  fontWeight: 500,
+                  flex: "0 0 auto",
+                }}
+              >
+                {user.initials}
+              </Avatar>
+
+              <Box sx={{ minWidth: 0 }}>
+                <Box
                   sx={{
-                    width: 28,
-                    height: 28,
-                    bgcolor: "#D6F4FF",
-                    color: "#00A7E1",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    minWidth: 0,
                   }}
                 >
-                  <Person fontSize="small" />
-                </Avatar>
-                <Box sx={{ lineHeight: 1.1 }}>
-                  <Typography
-                    sx={{ fontSize: 10, color: "rgba(255,255,255,0.6)" }}
-                  >
-                    Arcserve Inc.
-                  </Typography>
                   <Typography
                     sx={{
                       fontSize: 12,
                       fontWeight: 600,
                       color: "rgba(255,255,255,0.92)",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
                     }}
                   >
-                    John Doe
+                    {user.name}
                   </Typography>
                 </Box>
+
+                <Typography
+                  sx={{
+                    fontSize: 12,
+                    color: "rgba(255,255,255,0.68)",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {user.email}
+                </Typography>
               </Box>
-              <ChevronRightOutlined />
             </Box>
-          )}
-        </Box>
+
+            <IconButton
+              disableRipple
+              size="small"
+              sx={{
+                color: "rgba(255,255,255,0.75)",
+              }}
+              aria-label="Open profile menu"
+            >
+              <ExpandMore
+                sx={{
+                  transform: profileMenuOpen
+                    ? "rotate(180deg)"
+                    : "rotate(0deg)",
+                  transition: prefersReducedMotion
+                    ? "none"
+                    : "transform 160ms ease",
+                }}
+              />
+            </IconButton>
+          </Box>
+        )}
+
+        {/* Profile popover */}
+        <Popover
+          open={profileMenuOpen}
+          anchorEl={profileAnchorEl}
+          onClose={closeProfileMenu}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          transformOrigin={{ vertical: "bottom", horizontal: "left" }}
+          PaperProps={{
+            sx: {
+              width: 300,
+              borderRadius: 3,
+              boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
+              overflow: "hidden",
+            },
+          }}
+        >
+          {/* Header */}
+          <Box sx={{ p: 2, bgcolor: "background.paper" }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <Avatar
+                sx={{
+                  width: 40,
+                  height: 40,
+                  bgcolor: "rgba(0,0,0,0.06)",
+                  color: "rgba(0,0,0,0.75)",
+                  fontWeight: 500,
+                  fontSize: 16,
+                }}
+              >
+                {user.initials}
+              </Avatar>
+
+              <Box sx={{ minWidth: 0 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Typography
+                    sx={{
+                      fontSize: 12,
+                      fontWeight: 500,
+                      color: "rgba(0,0,0,0.85)",
+                    }}
+                  >
+                    {user.name}
+                  </Typography>
+                </Box>
+
+                <Typography sx={{ fontSize: 12, color: "rgba(0,0,0,0.45)" }}>
+                  {user.email}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          <Divider sx={{ borderColor: "rgba(0,0,0,0.05)" }} />
+
+          {/* Menu items */}
+          <List disablePadding>
+            {/* Dark mode row */}
+            <ListItemButton
+              disableRipple
+              sx={{ py: 1 }}
+              onClick={(e) => e.preventDefault()}
+            >
+              <ListItemIcon sx={{ minWidth: 32, color: "rgba(0,0,0,0.55)" }}>
+                <DarkModeOutlined />
+              </ListItemIcon>
+
+              <ListItemText
+                primary="Dark Mode"
+                primaryTypographyProps={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  color: "rgba(0,0,0,0.70)",
+                }}
+              />
+
+              <Switch
+                checked={darkMode}
+                onChange={(e) => setDarkMode(e.target.checked)}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </ListItemButton>
+
+            <Divider sx={{ borderColor: "rgba(0,0,0,0.05)" }} />
+
+            <ListItemButton
+              sx={{ py: 1 }}
+              onClick={() => {
+                /* navigate("/settings") */ closeProfileMenu();
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 32, color: "rgba(0,0,0,0.45)" }}>
+                <PersonOutlineOutlined />
+              </ListItemIcon>
+              <ListItemText
+                primary="My Profile"
+                primaryTypographyProps={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  color: "rgba(0,0,0,0.70)",
+                }}
+              />
+            </ListItemButton>
+
+            <ListItemButton
+              sx={{ py: 1 }}
+              onClick={() => {
+                /* open language */ closeProfileMenu();
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 32, color: "rgba(0,0,0,0.45)" }}>
+                <TranslateOutlined />
+              </ListItemIcon>
+              <ListItemText
+                primary="Language"
+                primaryTypographyProps={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  color: "rgba(0,0,0,0.70)",
+                }}
+              />
+            </ListItemButton>
+
+            <Divider sx={{ borderColor: "rgba(0,0,0,0.05)" }} />
+
+            <ListItemButton
+              sx={{ py: 1.6 }}
+              onClick={() => {
+                /* logout */ closeProfileMenu();
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 40, color: "#E53935" }}>
+                <LogoutOutlined />
+              </ListItemIcon>
+              <ListItemText
+                primary="Log out"
+                primaryTypographyProps={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  color: "rgba(0,0,0,0.70)",
+                }}
+              />
+            </ListItemButton>
+
+            <Box sx={{ px: 2, pb: 1.5, pt: 0.5 }}>
+              <Typography sx={{ fontSize: 12, color: "rgba(0,0,0,0.35)" }}>
+                {user.version} · Terms &amp; Conditions
+              </Typography>
+            </Box>
+          </List>
+        </Popover>
       </Box>
     </Drawer>
   );
