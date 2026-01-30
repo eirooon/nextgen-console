@@ -58,7 +58,14 @@ export default function SourcesToolbar() {
         }}
       >
         <Button variant="contained" startIcon={<AddOutlined />}>
-          Add {context}
+          <Typography
+            variant="body"
+            noWrap
+            component="span"
+            sx={{ width: "100%" }}
+          >
+            Add {context}
+          </Typography>
         </Button>
         <OutlinedInput
           id="outlined-adornment-password"

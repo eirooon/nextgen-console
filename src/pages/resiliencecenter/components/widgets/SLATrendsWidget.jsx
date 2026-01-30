@@ -29,7 +29,7 @@ export default function SLATrendsWidget({ data }) {
             SLA Trends
           </Typography>
         }
-        subheader="Daily compliance vs. breach volume"
+        subheader="90-day view of compliance and breach patterns over time."
       />
       <CardContent>
         <Box sx={{ width: "100%", height: 324 }}>

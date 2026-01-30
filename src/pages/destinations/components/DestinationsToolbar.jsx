@@ -48,7 +48,14 @@ export default function DestinationsToolbar() {
     >
       <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
         <Button variant="contained" startIcon={<AddOutlined />}>
-          Add {context}
+          <Typography
+            noWrap
+            component="span"
+            sx={{ width: "100%" }}
+            variant="body"
+          >
+            Add {context}
+          </Typography>
         </Button>
         <OutlinedInput
           size="small"

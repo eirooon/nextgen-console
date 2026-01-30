@@ -85,7 +85,8 @@ export default function DashboardLayout() {
     >
       <Grid container spacing={2} columns={12}>
         <Typography sx={{ fontSize: 14 }}>
-          Descriptiion about this dashboard.
+          See what needs attention today—active issues, job health, capacity,
+          and security gaps in one place.
         </Typography>
         <Grid size={12}>
           <TodaysRiskSummaryWidget data={passedData} />
@@ -93,7 +94,7 @@ export default function DashboardLayout() {
         <Grid size={12}>
           <PriorityQueueWidget
             title="Priority Queue"
-            description="Items that need your attention immediately."
+            description="Action list of issues to review, assign, or fix first."
             data={priorityQueueData}
             pageSize={5}
             onReviewItem={(item) => console.log("Review:", item)}
@@ -102,42 +103,42 @@ export default function DashboardLayout() {
         <Grid size={12}>
           <CapacityWatchWidget
             title="Capacity Watch"
-            description="Description about this widget."
+            description="Storage usage, growth, and time-to-full alerts."
             data={capacityWatchData}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 12, lg: 6, xl: 6 }}>
           <RestoreVerificationWidget
             title="Restore Verification"
-            description="Description about this widget."
+            description="Restore test results—pass rate and failed verifications to investigate."
             data={passedData}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 12, lg: 6, xl: 6 }}>
           <SecurityCoverageWidget
             title="Security Coverage"
-            description="Description about this widget."
+            description="Security gaps and coverage (e.g., immutability, MFA) with quick actions."
             data={passedData}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 12, lg: 6, xl: 6 }}>
           <LiveOperationsAndAuditWidget
             title="Live Operation & Audit"
-            description="Description about this widget."
+            description="Real-time activity: throughput, job progress, and recent admin changes."
             data={passedData}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 12, lg: 6, xl: 6 }}>
           <JobHealthTimelineWidget
             title="Job Health Timeline"
-            description="Description about this widget."
+            description="Success vs failed jobs across time windows to spot trends."
             data={passedData}
           />
         </Grid>
         <Grid size={12}>
           <IncidentClustersWidget
             title="Incident Clusters"
-            description="Description about this widget."
+            description="Grouped related issues to reduce noise and speed triage."
             data={passedData}
           />
         </Grid>

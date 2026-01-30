@@ -51,7 +51,7 @@ export default function SLADriftWidget({ data }) {
             SLA Drift: RPO Risks
           </Typography>
         }
-        subheader="Time past RPO (minutes) by source"
+        subheader="Workloads at risk of missing RPO targets and the top causes."
       />
 
       {dataset.length === 0 ? (

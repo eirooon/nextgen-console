@@ -49,7 +49,7 @@ export default function RecoveryConfidenceWidget({ data }) {
             Recovery Confidence
           </Typography>
         }
-        subheader="Based on SLA, Immutability, and Restore success"
+        subheader="Confidence score based on SLA compliance, verification, and protection signals."
       />
       <CardContent sx={{ flexGrow: 1, mt: 3 }}>
         <Stack direction={{ xs: "column", md: "row" }} alignItems="center">

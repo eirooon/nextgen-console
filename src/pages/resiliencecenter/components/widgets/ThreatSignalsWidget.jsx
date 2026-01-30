@@ -57,7 +57,7 @@ export default function ThreatSignalsWidget({ data }) {
             Threat Signals
           </Typography>
         }
-        subheader="Description here"
+        subheader="Indicators that may suggest compromise—review and validate restore points."
       />
       <CardContent>
         <Grid container columns={12} spacing={3}>

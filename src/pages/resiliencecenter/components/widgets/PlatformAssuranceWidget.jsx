@@ -58,7 +58,7 @@ export default function PlatformAssuranceWidget({ data }) {
             Platform Assurance
           </Typography>
         }
-        subheader="Description here"
+        subheader="Coverage and controls summary: recovery health, protection, and immutability."
       />
       <CardContent>
         <Grid container columns={12} spacing={3}>

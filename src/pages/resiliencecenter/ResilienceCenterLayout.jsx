@@ -13,7 +13,7 @@ import QuickActions from "./components/widgets/QuickActions.jsx";
 
 export default function ResilienceCenterLayout() {
   const arcGeniusInsightsData =
-    "Most issues today are caused by agent connectivity. Updating agents and restarting 1 service will restore fulls protection";
+    "12 workloads are at-risk due to RPO drift in the last 24 hours—mostly from repository capacity nearing full. Freeing space or expanding the repository and rerunning missed jobs will restore compliance.";
   const overallProtectionStatusData = {
     protected: 88,
     atrisk: 12,
@@ -89,8 +89,8 @@ export default function ResilienceCenterLayout() {
     >
       <Grid container spacing={3} columns={12}>
         <Typography sx={{ fontSize: 14 }}>
-          Know what’s protected, what’s at risk, and what to fix next—based on
-          proven recovery signals.
+          Your recovery posture at a glance—what’s protected, what’s at risk,
+          and what to fix next.
         </Typography>
         <Grid size={12}>
           <ArcGeniusInsightsWidget data={arcGeniusInsightsData} />

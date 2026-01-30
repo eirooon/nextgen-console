@@ -56,6 +56,7 @@ export default function TodaysRiskSummaryWidget({ data }) {
             Today's Risk Summary
           </Typography>
         }
+        subheader="Snapshot of today’s highest-impact risks and active breaches."
         action={
           <Button variant="text" color="secondary">
             View all details

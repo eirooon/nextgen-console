@@ -123,7 +123,7 @@ export default function AppNavigation({
   const user = React.useMemo(
     () => ({
       name: "Erron Sevilla",
-      email: "erron@arcserve.com",
+      organization: "Arcserve",
       initials: "ES",
       planLabel: "Pro",
       version: "v1.5.69",
@@ -586,7 +586,10 @@ export default function AppNavigation({
         {/* Footer profile row (click to open) */}
         {collapsed ? (
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Tooltip title={`${user.name} (${user.email})`} placement="right">
+            <Tooltip
+              title={`${user.name} (${user.organization})`}
+              placement="right"
+            >
               <IconButton
                 onClick={openProfileMenu}
                 sx={{ p: 0.5 }}
@@ -682,7 +685,7 @@ export default function AppNavigation({
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {user.email}
+                  {user.organization}
                 </Typography>
               </Box>
             </Box>
@@ -755,7 +758,7 @@ export default function AppNavigation({
                 </Box>
 
                 <Typography sx={{ fontSize: 12, color: "rgba(0,0,0,0.45)" }}>
-                  {user.email}
+                  {user.organization}
                 </Typography>
               </Box>
             </Box>

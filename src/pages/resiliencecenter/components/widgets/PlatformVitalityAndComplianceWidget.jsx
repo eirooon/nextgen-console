@@ -18,7 +18,7 @@ export default function PlatformVitalityWidget({ data }) {
             Platform Vitality and Compliance
           </Typography>
         }
-        subheader="Holistic health across core pillars"
+        subheader="Key system readiness checks: integrations, agents, and storage integrity."
       />
       <CardContent>
         <Box

@@ -89,6 +89,7 @@ export default function OverallProtectionStatusWidget({ data }) {
           </Typography>
         }
         sx={{ pb: 0.5 }}
+        subheader="Overall health of your environment—what’s critical, warning, and healthy."
       />
 
       <CardContent

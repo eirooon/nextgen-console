@@ -63,7 +63,14 @@ export default function DisasterRecoveryToolbar() {
           startIcon={<AddOutlined />}
           onClick={() => navigate("/disaster-recovery/dr-runbooks/new")}
         >
-          Add {context}
+          <Typography
+            variant="body"
+            noWrap
+            component="span"
+            sx={{ width: "100%" }}
+          >
+            Add {context}
+          </Typography>
         </Button>
         <OutlinedInput
           id="outlined-adornment-password"
