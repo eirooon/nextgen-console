@@ -42,10 +42,10 @@ export default function App() {
     <AppShell>
       <Routes>
         {/* Root */}
-        <Route path="/" element={<Navigate to="/resiliencecenter" replace />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
         {/* Top-level pages */}
-        <Route path="/resiliencecenter" element={<ResilienceCenter />} />
+        {/* <Route path="/resiliencecenter" element={<ResilienceCenter />} /> */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/event-logs" element={<EventLogs />} />

@@ -59,7 +59,7 @@ export default function RecomendedObjectives() {
             Recommended Objectives
           </Typography>
         }
-        subheader="Actions you need to take based on your current situation."
+        subheader="Description here."
       />
       <CardContent>
         <Grid container spacing={2}>

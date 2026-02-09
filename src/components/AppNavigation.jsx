@@ -27,8 +27,6 @@ import {
   CloudUpload,
   HelpRounded,
   ExpandMore,
-
-  // add these:
   DarkModeOutlined,
   TranslateOutlined,
   LogoutOutlined,
@@ -46,26 +44,29 @@ export default function AppNavigation({
   prefersReducedMotion,
 }) {
   const location = useLocation();
+  const transitionTime = prefersReducedMotion ? "0ms" : "220ms";
+  const transitionCurve = "cubic-bezier(0.2, 0, 0, 1)";
+  const sharedTransition = `${transitionTime} ${transitionCurve}`;
 
   const productOptions = React.useMemo(
     () => [
       {
         id: "udp",
-        label: "Arcserve UDP",
+        label: "Unified Data Protection (UDP)",
         icon: <VerifiedUser sx={{ color: "rgba(255, 213, 0, 1)" }} />,
       },
       {
         id: "cloud",
-        label: "Arcserve Cloud Direct",
+        label: "Cloud Direct",
         icon: <CloudUpload sx={{ color: "rgb(19, 157, 9)" }} />,
       },
       {
         id: "shadow",
-        label: "Arcserve ShadowProtect",
+        label: "ShadowProtect",
         icon: <HelpRounded sx={{ color: "rgb(36, 203, 225)" }} />,
       },
     ],
-    []
+    [],
   );
 
   const [activeProduct, setActiveProduct] = React.useState("udp");
@@ -88,7 +89,7 @@ export default function AppNavigation({
     const currentPath = location.pathname;
 
     const containingSection = navSections.find((s) =>
-      s.items.some((item) => currentPath.startsWith(item.to))
+      s.items.some((item) => currentPath.startsWith(item.to)),
     );
 
     if (containingSection) {
@@ -128,7 +129,7 @@ export default function AppNavigation({
       planLabel: "Pro",
       version: "v1.5.69",
     }),
-    []
+    [],
   );
 
   const [profileAnchorEl, setProfileAnchorEl] = React.useState(null);
@@ -152,11 +153,14 @@ export default function AppNavigation({
       sx={{
         width: drawerWidth,
         flexShrink: 0,
+        whiteSpace: "nowrap",
         "& .MuiDrawer-paper": {
           width: drawerWidth,
           overflowX: "hidden",
-          transition: prefersReducedMotion ? "none" : `width ${transition}`,
-          willChange: prefersReducedMotion ? "auto" : "width",
+          transition: prefersReducedMotion
+            ? "none"
+            : `width ${sharedTransition}`,
+          boxSizing: "border-box",
         },
       }}
     >
@@ -251,11 +255,11 @@ export default function AppNavigation({
         <Box
           sx={{
             backgroundColor: "rgba(255, 255, 255, 0.05)",
-            border: "1px solid rgba(255, 255, 255, 0.12)",
+            border: "1px solid rgba(255, 255, 255, 0.08)",
             borderRadius: "8px",
             width: "100%",
             cursor: "pointer",
-            "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.07)" },
+            "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
           }}
           onClick={openProductMenu}
           role="button"
@@ -304,7 +308,7 @@ export default function AppNavigation({
                   }}
                 >
                   <Typography
-                    fontSize={12}
+                    fontSize={14}
                     fontWeight={500}
                     sx={{
                       color: "rgba(255,255,255,0.92)",
@@ -365,7 +369,7 @@ export default function AppNavigation({
         >
           {/* Optional footer line like profile */}
           <Box sx={{ px: 1, pb: 1, pt: 1 }}>
-            <Typography sx={{ fontSize: 12, color: "rgba(0,0,0,0.35)" }}>
+            <Typography sx={{ fontSize: 14, color: "rgba(0,0,0,0.35)" }}>
               Switch Product
             </Typography>
           </Box>
@@ -377,7 +381,7 @@ export default function AppNavigation({
               return (
                 <React.Fragment key={p.id}>
                   <ListItemButton
-                    sx={{ py: 1 }}
+                    sx={{ py: 1, px: 1 }}
                     onClick={() => {
                       setActiveProduct(p.id);
                       closeProductMenu();
@@ -405,7 +409,7 @@ export default function AppNavigation({
                     <ListItemText
                       primary={p.label}
                       primaryTypographyProps={{
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: 500,
                         color: "rgba(0,0,0,0.70)",
                       }}
@@ -416,8 +420,7 @@ export default function AppNavigation({
                         label="Active"
                         size="small"
                         sx={{
-                          height: 20,
-                          fontSize: 11,
+                          fontSize: 14,
                           bgcolor: "rgba(111,83,255,0.12)",
                           color: "#6f53ff",
                         }}
@@ -433,7 +436,7 @@ export default function AppNavigation({
         </Popover>
       </Box>
 
-      <Divider sx={{ borderColor: "rgba(255,255,255,0.15)" }} />
+      <Divider sx={{ borderColor: "rgba(255,255,255,0.07)" }} />
 
       {/* Sections */}
       <Box sx={{ flex: 1, overflow: "auto" }}>
@@ -451,7 +454,7 @@ export default function AppNavigation({
                     sx={{
                       px: 1.25,
                       py: 1,
-                      mb: 0.25,
+                      // mb: 0.25,
                       mt: 1,
                       borderRadius: 1.25,
                       "&:hover": { bgcolor: "rgba(255,255,255,0.06)" },
@@ -462,9 +465,9 @@ export default function AppNavigation({
                   >
                     <Typography
                       sx={{
-                        fontSize: 10,
-                        color: "rgba(255,255,255,0.70)",
-                        letterSpacing: 0.4,
+                        fontSize: 14,
+                        color: "rgba(255,255,255,)",
+                        // fontWeight: 600,
                       }}
                     >
                       {section.title}
@@ -486,8 +489,7 @@ export default function AppNavigation({
                 {/* When collapsed sidebar: keep sections always expanded (tooltips are the “header”) */}
                 <Collapse
                   in={collapsed ? true : !!openSections[section.title]}
-                  timeout={prefersReducedMotion ? 0 : 180}
-                  unmountOnExit={!collapsed}
+                  timeout={prefersReducedMotion ? 0 : 200}
                 >
                   <List disablePadding>
                     {section.items.map((item) => {
@@ -503,11 +505,11 @@ export default function AppNavigation({
                             justifyContent: collapsed ? "center" : "flex-start",
                             pt: 0.75,
                             pb: 0.75,
-                            mt: 1,
-                            mb: 1,
+                            mb: 0.75,
+                            mt: 0.75,
                             position: "relative",
                             overflow: "hidden",
-                            borderRadius: 1.25,
+                            borderRadius: 2,
                             "&.active": {
                               bgcolor: "rgba(111,83,255,0.22)",
                             },
@@ -531,7 +533,10 @@ export default function AppNavigation({
                           >
                             <Icon
                               sx={{
-                                fill: "url(#mainGradient)",
+                                // fill: "url(#mainGradient)",
+                                color: "rgba(255,255,255,0.7)",
+                                width: 20,
+                                height: 20,
                               }}
                             />
                           </ListItemIcon>
@@ -540,9 +545,9 @@ export default function AppNavigation({
                             <ListItemText
                               primary={item.label}
                               primaryTypographyProps={{
-                                fontSize: 12,
-                                fontWeight: "500",
-                                color: "rgba(255,255,255,0.90)",
+                                fontSize: 14,
+                                fontWeight: 400,
+                                // color: "rgba(255,255,255,0.90)",
                               }}
                             />
                           )}
@@ -567,14 +572,14 @@ export default function AppNavigation({
 
               {/* Divider between sections ONLY (not after the last one) */}
               {collapsed && !isLast && (
-                <Divider sx={{ borderColor: "rgba(255,255,255,0.15)" }} />
+                <Divider sx={{ borderColor: "rgba(255,255,255,0.07)" }} />
               )}
             </Box>
           );
         })}
       </Box>
 
-      <Divider sx={{ borderColor: "rgba(255,255,255,0.15)" }} />
+      <Divider sx={{ borderColor: "rgba(255,255,255,0.07)" }} />
 
       {/*Profile*/}
       <Box
@@ -664,7 +669,7 @@ export default function AppNavigation({
                 >
                   <Typography
                     sx={{
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: 600,
                       color: "rgba(255,255,255,0.92)",
                       whiteSpace: "nowrap",
@@ -678,7 +683,7 @@ export default function AppNavigation({
 
                 <Typography
                   sx={{
-                    fontSize: 12,
+                    fontSize: 14,
                     color: "rgba(255,255,255,0.68)",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
@@ -748,7 +753,7 @@ export default function AppNavigation({
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <Typography
                     sx={{
-                      fontSize: 12,
+                      fontSize: 16,
                       fontWeight: 500,
                       color: "rgba(0,0,0,0.85)",
                     }}
@@ -781,7 +786,7 @@ export default function AppNavigation({
               <ListItemText
                 primary="Dark Mode"
                 primaryTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: 400,
                   color: "rgba(0,0,0,0.70)",
                 }}
@@ -808,7 +813,7 @@ export default function AppNavigation({
               <ListItemText
                 primary="My Profile"
                 primaryTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: 400,
                   color: "rgba(0,0,0,0.70)",
                 }}
@@ -827,7 +832,7 @@ export default function AppNavigation({
               <ListItemText
                 primary="Language"
                 primaryTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: 400,
                   color: "rgba(0,0,0,0.70)",
                 }}
@@ -842,13 +847,13 @@ export default function AppNavigation({
                 /* logout */ closeProfileMenu();
               }}
             >
-              <ListItemIcon sx={{ minWidth: 40, color: "#E53935" }}>
+              <ListItemIcon sx={{ minWidth: 32, color: "#E53935" }}>
                 <LogoutOutlined />
               </ListItemIcon>
               <ListItemText
                 primary="Log out"
                 primaryTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: 400,
                   color: "rgba(0,0,0,0.70)",
                 }}

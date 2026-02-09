@@ -20,23 +20,13 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: [
-      "Inter",
-      "ui-sans-serif",
-      "system-ui",
-      "-apple-system",
-      '"Segoe UI"',
-      "Roboto",
-      "Helvetica",
-      "Arial",
-    ].join(","),
+    fontFamily: ["Inter", "sans-serif", "Roboto", "Helvetica", "Arial"].join(),
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          fontFamily:
-            "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+          fontFamily: "Inter, sans-serif, Roboto, Helvetica, Arial",
         },
         "@media (prefers-reduced-motion: reduce)": {
           "*": {

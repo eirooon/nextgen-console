@@ -95,13 +95,13 @@ export default function ResilienceCenterLayout() {
         <Grid size={12}>
           <ArcGeniusInsightsWidget data={arcGeniusInsightsData} />
         </Grid>
-        <Grid size={{ xs: 12, md: 12, lg: 6, xl: 4 }}>
+        <Grid size={{ xs: 12, md: 12, lg: 6, xl: 6 }}>
           <OverallProtectionStatusWidget data={overallProtectionStatusData} />
         </Grid>
-        <Grid size={{ xs: 12, md: 12, lg: 6, xl: 4 }}>
+        <Grid size={{ xs: 12, md: 12, lg: 6, xl: 6 }}>
           <RecoveryConfidenceWidget data={recoveryConfidenceData} />
         </Grid>
-        <Grid size={{ xs: 12, md: 12, lg: 6, xl: 4 }}>
+        <Grid size={{ xs: 12, md: 12, lg: 6, xl: 12 }}>
           <SLADriftWidget data={slaDriftData} />
         </Grid>
         <Grid size={{ xs: 12, md: 12, lg: 6, xl: 6 }}>

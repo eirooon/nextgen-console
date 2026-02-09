@@ -7,21 +7,21 @@ import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { headerStyleMap } from "../theme/headerStyleMap";
 import { useLocation } from "react-router-dom";
 
-const DRAWER_OPEN = 230;
-const DRAWER_CLOSED = 56;
+const DRAWER_OPEN = 240;
+const DRAWER_CLOSED = 58;
 const HEADER_H = 64;
 
 export default function AppShell({ children }) {
   const [collapsed, setCollapsed] = useLocalStorageState(
     "arcserve.sidebar.collapsed",
-    false
+    false,
   );
 
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const drawerWidth = useMemo(
     () => (collapsed ? DRAWER_CLOSED : DRAWER_OPEN),
-    [collapsed]
+    [collapsed],
   );
 
   const location = useLocation();

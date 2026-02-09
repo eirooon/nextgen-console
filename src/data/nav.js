@@ -1,79 +1,80 @@
 import {
-  LocalPoliceOutlined,
-  AssignmentIndOutlined,
-  AssignmentOutlined,
-  CorporateFareOutlined,
-  EventNoteOutlined,
-  FmdGoodOutlined,
-  InsertChartOutlined,
-  LibraryBooksOutlined,
+  LocalPolice,
+  AssignmentInd,
+  Assignment,
+  CorporateFare,
+  EventNote,
+  FmdGood,
+  InsertChart,
+  LibraryBooks,
   Monitor,
-  NotificationAddOutlined,
-  PublishedWithChangesOutlined,
-  VerifiedUserOutlined,
-  SettingsOutlined,
-  HelpOutline,
+  NotificationAdd,
+  PublishedWithChanges,
+  VerifiedUser,
+  Settings,
+  Help,
+  NotificationAddSharp,
 } from "@mui/icons-material";
 
 export const navSections = [
   {
-    title: "MONITOR",
+    title: "Monitor",
     items: [
-      {
-        label: "Resilience Center",
-        to: "/resiliencecenter",
-        icon: LocalPoliceOutlined,
-      },
-      { label: "Dashboard", to: "/dashboard", icon: InsertChartOutlined },
+      // {
+      //   label: "Resilience Center",
+      //   to: "/resiliencecenter",
+      //   icon: LocalPolice,
+      // },
+      { label: "Dashboard", to: "/dashboard", icon: InsertChart },
     ],
   },
   {
-    title: "OPERATE",
+    title: "Operate",
     items: [
-      { label: "Jobs", to: "/jobs", icon: LibraryBooksOutlined },
-      { label: "Event Logs", to: "/event-logs", icon: EventNoteOutlined },
+      { label: "Jobs", to: "/jobs", icon: LibraryBooks },
+      { label: "Event Logs", to: "/event-logs", icon: EventNote },
     ],
   },
   {
-    title: "MANAGE ASSETS",
+    title: "Manage Assets",
     items: [
       { label: "Sources", to: "/sources", icon: Monitor },
-      { label: "Destinations", to: "/destinations", icon: FmdGoodOutlined },
+      { label: "Destinations", to: "/destinations", icon: FmdGood },
       {
         label: "Infrastructures",
         to: "/infrastructures",
-        icon: CorporateFareOutlined,
+        icon: CorporateFare,
       },
     ],
   },
   {
-    title: "CONFIGURE PROTECTION",
+    title: "Configure Protection",
     items: [
-      { label: "Policies", to: "/policies", icon: VerifiedUserOutlined },
+      { label: "Policies", to: "/policies", icon: VerifiedUser },
       {
         label: "Disaster Recovery",
         to: "/disaster-recovery",
-        icon: PublishedWithChangesOutlined,
+        icon: PublishedWithChanges,
       },
       {
         label: "Alert Rules",
         to: "/alert-rules",
-        icon: NotificationAddOutlined,
+        icon: NotificationAdd,
       },
     ],
   },
   {
-    title: "REPORT & AUDIT",
+    title: "Report & Audit",
     items: [
-      { label: "Reports", to: "/reports", icon: AssignmentOutlined },
-      { label: "Audit Logs", to: "/audit-logs", icon: AssignmentIndOutlined },
+      { label: "Reports", to: "/reports", icon: Assignment },
+      { label: "Audit Logs", to: "/audit-logs", icon: AssignmentInd },
     ],
   },
   {
-    title: "ADMIN & HELP",
+    title: "Admin & Help",
     items: [
-      { label: "Settings", to: "/settings", icon: SettingsOutlined },
-      { label: "Help", to: "/help", icon: HelpOutline },
+      { label: "Settings", to: "/settings", icon: Settings },
+      { label: "Help", to: "/help", icon: Help },
     ],
   },
 ];
@@ -92,7 +93,7 @@ export const routeMeta = navSections
       path: item.to,
       label: item.label,
       section: section.title,
-    }))
+    })),
   )
   .reduce((acc, r) => {
     acc[r.path] = { label: r.label, section: r.section };

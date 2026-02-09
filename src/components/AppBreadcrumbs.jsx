@@ -28,7 +28,7 @@ export default function AppBreadcrumbs() {
             <Typography
               key={crumb.path}
               sx={{
-                fontSize: 16,
+                fontSize: 20,
                 fontWeight: 500,
                 color: "#000",
               }}
@@ -47,9 +47,9 @@ export default function AppBreadcrumbs() {
               if (!isSection) navigate(crumb.path);
             }}
             sx={{
-              fontSize: 16,
+              fontSize: 20,
               color: "text.secondary",
-              fontWeight: 500,
+              // fontWeight: 500,
               cursor: isSection ? "default" : "pointer",
             }}
           >
