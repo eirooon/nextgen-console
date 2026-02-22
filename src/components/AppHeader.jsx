@@ -48,7 +48,7 @@ export default function AppHeader({ height = 64, sx }) {
             }}
             size="small"
           >
-            Ask ArcGenius
+            Ask ArcGenie
           </Button>
           <IconButton aria-label="Notifications">
             <Notifications />
