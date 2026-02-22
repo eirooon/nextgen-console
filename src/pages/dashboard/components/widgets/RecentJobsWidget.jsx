@@ -7,21 +7,23 @@ import {
   Divider,
   Pagination,
   IconButton,
-  useTheme,
+  CircularProgress,
 } from "@mui/material";
-import { ChevronLeftRounded, ChevronRightRounded } from "@mui/icons-material";
+import {
+  ChevronLeftRounded,
+  ChevronRightRounded,
+  MoreVert,
+} from "@mui/icons-material";
 import CardWidget from "../../../../components/CardWidget";
 
-export default function PriorityQueueWidget({
+export default function RecentJobsWidget({
   data,
   pageSize = 5,
   title,
   description,
-  onReviewItem,
   getItemKey,
   emptyState,
 }) {
-  const theme = useTheme();
   const [page, setPage] = useState(1);
 
   const safeItems = useMemo(() => {
@@ -36,22 +38,39 @@ export default function PriorityQueueWidget({
     return safeItems.slice(start, start + pageSize);
   }, [safeItems, clampedPage, pageSize]);
 
-  const dotColor = (severity) => {
-    switch (severity) {
-      case "warning":
-        return theme.palette.warning.main;
-      case "info":
-        return theme.palette.info.main;
-      case "critical":
-      default:
-        return theme.palette.error.main;
-    }
-  };
-
   const onPageChange = (_, value) => setPage(value);
 
   const handlePrev = () => setPage((p) => Math.max(1, p - 1));
   const handleNext = () => setPage((p) => Math.min(totalPages, p + 1));
+
+  const CustomProgress = ({ value }) => {
+    return (
+      <Box sx={{ position: "relative", display: "inline-flex" }}>
+        <CircularProgress
+          variant="determinate"
+          sx={{
+            color: (theme) => theme.palette.grey[200],
+          }}
+          size={36}
+          thickness={6}
+          value={100}
+        />
+
+        {/* Foreground Circle (Blue progress) */}
+        <CircularProgress
+          variant="determinate"
+          value={value}
+          size={36}
+          thickness={6}
+          sx={{
+            color: "#2962FF",
+            position: "absolute",
+            left: 0,
+          }}
+        />
+      </Box>
+    );
+  };
 
   return (
     <CardWidget title={title} description={description}>
@@ -89,16 +108,16 @@ export default function PriorityQueueWidget({
                   }}
                 >
                   {/* severity dot */}
-                  <Box sx={{ p: 1 }}>
-                    <Box
-                      sx={{
-                        width: 8,
-                        height: 8,
-                        borderRadius: "999px",
-                        bgcolor: dotColor(item?.severity),
-                        boxShadow: `0 0 0 6px ${theme.palette.error.main}1A`, // subtle halo
-                      }}
-                    />
+                  <Box
+                    sx={{
+                      p: 0,
+                      mt: 0.5,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignContent: "center",
+                    }}
+                  >
+                    <CustomProgress value={item?.progressValue ?? 0} />
                   </Box>
 
                   {/* text */}
@@ -107,32 +126,21 @@ export default function PriorityQueueWidget({
                       variant="body2"
                       sx={{ fontWeight: 600, lineHeight: 1.2, mb: 0.75 }}
                     >
-                      {item?.title}
+                      {item?.jobName}
                     </Typography>
                     <Typography
                       variant="body2"
                       sx={{ color: "text.secondary" }}
                     >
-                      {item?.message}
+                      {item?.jobType} • {item?.time}
                     </Typography>
                   </Box>
 
                   {/* action */}
                   <Box sx={{ pt: 0.4 }}>
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        item?.onReview?.(item);
-                        onReviewItem?.(item);
-                      }}
-                      sx={{
-                        textTransform: "none",
-                      }}
-                      size="small"
-                      color="secondary"
-                    >
-                      Review
-                    </Button>
+                    <IconButton aria-label="previous page" size="small">
+                      <MoreVert />
+                    </IconButton>
                   </Box>
                 </Box>
 

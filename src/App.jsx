@@ -1,12 +1,11 @@
 import { Navigate, Route, Routes, Outlet } from "react-router-dom";
 import AppShell from "./layout/AppShell";
 
-import ResilienceCenter from "./pages/resiliencecenter/ResilienceCenterLayout";
 import Dashboard from "./pages/dashboard/DashboardLayout";
 import Jobs from "./pages/jobs/Jobs";
 import EventLogs from "./pages/eventlogs/EventLogs";
 import Infrastructures from "./pages/infrastructures/Infrastructures";
-import Policies from "./pages/policies/Policies";
+import Plans from "./pages/plans/Plans";
 import AlertRules from "./pages/alertrules/AlertRules";
 import Reports from "./pages/reports/Reports";
 import AuditLogs from "./pages/auditlogs/AuditLogs";
@@ -45,17 +44,16 @@ export default function App() {
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
         {/* Top-level pages */}
-        {/* <Route path="/resiliencecenter" element={<ResilienceCenter />} /> */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/event-logs" element={<EventLogs />} />
         <Route path="/infrastructures" element={<Infrastructures />} />
-        <Route path="/policies" element={<Policies />} />
+        <Route path="/plans" element={<Plans />} />
         <Route path="/alert-rules" element={<AlertRules />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/audit-logs" element={<AuditLogs />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/help" element={<Help />} />
+        <Route path="/support" element={<Help />} />
 
         {/* SOURCES (Split layout) */}
         <Route path="/sources" element={<SourcesLayout />}>

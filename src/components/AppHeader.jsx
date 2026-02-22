@@ -1,5 +1,10 @@
-import { AppBar, Toolbar, Button, IconButton, Box } from "@mui/material";
-import { AutoAwesomeRounded, Notifications } from "@mui/icons-material";
+import { AppBar, Toolbar, IconButton, Box, Button } from "@mui/material";
+import {
+  AutoAwesomeRounded,
+  Notifications,
+  Help,
+  RocketLaunch,
+} from "@mui/icons-material";
 import AppBreadcrumbs from "./AppBreadcrumbs";
 
 export default function AppHeader({ height = 64, sx }) {
@@ -20,11 +25,11 @@ export default function AppHeader({ height = 64, sx }) {
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <AppBreadcrumbs />
         </Box>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <Button
             variant="contained"
             startIcon={<AutoAwesomeRounded />}
@@ -38,14 +43,21 @@ export default function AppHeader({ height = 64, sx }) {
               "&:hover": { filter: "brightness(1.03)", boxShadow: "none" },
               pl: 1.75,
               pr: 1.75,
+              pt: 0.75,
+              pb: 0.75,
             }}
             size="small"
           >
             Ask ArcGenius
           </Button>
-
           <IconButton aria-label="Notifications">
             <Notifications />
+          </IconButton>
+          <IconButton aria-label="UDP Quick Start Guide">
+            <RocketLaunch />
+          </IconButton>
+          <IconButton aria-label="Help & Support">
+            <Help />
           </IconButton>
         </div>
       </Toolbar>

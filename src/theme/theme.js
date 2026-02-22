@@ -39,7 +39,6 @@ export const theme = createTheme({
       },
     },
 
-    // Header glass effect
     MuiAppBar: {
       styleOverrides: {
         root: {
@@ -49,7 +48,6 @@ export const theme = createTheme({
       },
     },
 
-    // Sidebar gradient + remove border
     MuiDrawer: {
       styleOverrides: {
         paper: {
@@ -60,7 +58,6 @@ export const theme = createTheme({
       },
     },
 
-    // Make list buttons feel “designed”
     MuiListItemButton: {
       styleOverrides: {
         root: {
@@ -82,7 +79,7 @@ export const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 16,
+          borderRadius: 12,
           borderColor: "#eeeeee",
           padding: "8px",
         },
@@ -94,8 +91,11 @@ export const theme = createTheme({
           paddingBottom: "0px",
         },
         title: {
-          fontWeight: 600,
-          fontSize: 20,
+          fontSize: "1.25rem",
+          fontWeight: 700,
+        },
+        subheader: {
+          fontSize: "0.875rem",
         },
       },
     },

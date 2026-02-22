@@ -19,11 +19,7 @@ export default function CardWidget({
       {...rest}
     >
       <CardHeader
-        title={
-          <Typography variant="h6" fontWeight="bold">
-            {title}
-          </Typography>
-        }
+        title={title}
         action={action}
         subheader={description}
       ></CardHeader>

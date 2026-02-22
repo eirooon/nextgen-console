@@ -39,7 +39,7 @@ export default function SplitPageLayout({
                   selected={active}
                   onClick={() => onSelect?.(item.id)}
                   sx={{
-                    mb: 0.25,
+                    mb: 0.5,
                     "&.Mui-selected": { bgcolor: "rgba(111,83,255,0.10)" },
                     "&.Mui-selected:hover": {
                       bgcolor: "rgba(111,83,255,0.14)",
@@ -48,7 +48,10 @@ export default function SplitPageLayout({
                     alignItems: "center",
                     justifyContent: "space-between",
                     gap: 1.5,
-                    p: 1.5,
+                    pr: 1.5,
+                    pl: 1.5,
+                    pt: 1,
+                    pb: 1,
                   }}
                 >
                   <ListItemText

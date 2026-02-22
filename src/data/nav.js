@@ -1,5 +1,4 @@
 import {
-  LocalPolice,
   AssignmentInd,
   Assignment,
   CorporateFare,
@@ -12,8 +11,7 @@ import {
   PublishedWithChanges,
   VerifiedUser,
   Settings,
-  Help,
-  NotificationAddSharp,
+  SupportAgent,
 } from "@mui/icons-material";
 
 export const navSections = [
@@ -50,7 +48,7 @@ export const navSections = [
   {
     title: "Configure Protection",
     items: [
-      { label: "Policies", to: "/policies", icon: VerifiedUser },
+      { label: "Plans", to: "/plans", icon: VerifiedUser },
       {
         label: "Disaster Recovery",
         to: "/disaster-recovery",
@@ -71,10 +69,10 @@ export const navSections = [
     ],
   },
   {
-    title: "Admin & Help",
+    title: "Admin & Support",
     items: [
       { label: "Settings", to: "/settings", icon: Settings },
-      { label: "Help", to: "/help", icon: Help },
+      { label: "Support", to: "/support", icon: SupportAgent },
     ],
   },
 ];

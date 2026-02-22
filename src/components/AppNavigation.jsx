@@ -37,6 +37,18 @@ import { navSections } from "../data/nav";
 import arcserveLogoFull from "../assets/arcserve-full-logo.svg";
 import arcserveLogoSmall from "../assets/arcserve-small-logo.svg";
 
+// LocalStorage helpers
+const STORAGE_KEY = "appNavigationState:v1";
+
+function safeParse(json, fallback) {
+  try {
+    const v = JSON.parse(json);
+    return v ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export default function AppNavigation({
   collapsed,
   drawerWidth,
@@ -69,15 +81,36 @@ export default function AppNavigation({
     [],
   );
 
-  const [activeProduct, setActiveProduct] = React.useState("udp");
+  // Load initial persisted state once
+  const persisted = React.useMemo(() => {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return safeParse(raw, {});
+  }, []);
+
+  // Persist active product
+  const [activeProduct, setActiveProduct] = React.useState(
+    persisted.activeProduct || "udp",
+  );
+
   const [productAnchorEl, setProductAnchorEl] = React.useState(null);
 
-  // --- Collapsible sections state (default: open all) ---
+  // Persist open sections
   const [openSections, setOpenSections] = React.useState(() => {
+    // defaults: open all
     const initial = {};
     navSections.forEach((s) => {
-      initial[s.title] = true; // multiple open default
+      initial[s.title] = true;
     });
+
+    // Apply persisted section state (if any)
+    if (persisted.openSections && typeof persisted.openSections === "object") {
+      Object.keys(initial).forEach((title) => {
+        if (typeof persisted.openSections[title] === "boolean") {
+          initial[title] = persisted.openSections[title];
+        }
+      });
+    }
+
     return initial;
   });
 
@@ -85,6 +118,38 @@ export default function AppNavigation({
     setOpenSections((prev) => ({ ...prev, [title]: !prev[title] }));
   }, []);
 
+  // Persist collapsed state too (in addition to whatever parent controls)
+  // - This keeps UI consistent on refresh.
+  React.useEffect(() => {
+    // only write if prop is boolean
+    if (typeof collapsed === "boolean") {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const existing = safeParse(raw, {});
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          ...existing,
+          collapsed,
+        }),
+      );
+    }
+  }, [collapsed]);
+
+  //Persist openSections + activeProduct whenever they change
+  React.useEffect(() => {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const existing = safeParse(raw, {});
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        ...existing,
+        activeProduct,
+        openSections,
+      }),
+    );
+  }, [activeProduct, openSections]);
+
+  // Keep current section open based on route (won't close others)
   React.useEffect(() => {
     const currentPath = location.pathname;
 
@@ -95,7 +160,7 @@ export default function AppNavigation({
     if (containingSection) {
       setOpenSections((prev) => ({
         ...prev,
-        [containingSection.title]: true, // ensure it's open (doesn't close others)
+        [containingSection.title]: true,
       }));
     }
   }, [location.pathname]);
@@ -164,15 +229,6 @@ export default function AppNavigation({
         },
       }}
     >
-      {/* Define gradient ONCE */}
-      <svg width={0} height={0} style={{ position: "absolute" }}>
-        <linearGradient id="mainGradient" x1="100%" y1="100%" x2="20%" y2="10%">
-          <stop offset="10%" stopColor="#a335d2" />
-          {/* <stop offset="60%" stopColor="#0d3dc2" /> */}
-          <stop offset="80%" stopColor="#3ac1ee" />
-        </linearGradient>
-      </svg>
-
       {/* Top / brand row */}
       <Box sx={{ p: 1.75 }}>
         <Box
@@ -219,7 +275,20 @@ export default function AppNavigation({
             }}
           >
             <IconButton
-              onClick={onToggle}
+              onClick={() => {
+                // ✅ UPDATED: persist in localStorage immediately as well
+                const raw = localStorage.getItem(STORAGE_KEY);
+                const existing = safeParse(raw, {});
+                localStorage.setItem(
+                  STORAGE_KEY,
+                  JSON.stringify({
+                    ...existing,
+                    collapsed: !collapsed,
+                  }),
+                );
+
+                onToggle?.();
+              }}
               size="small"
               sx={{
                 borderRadius: 999,
@@ -243,7 +312,7 @@ export default function AppNavigation({
       {/* Product Switcher */}
       <Box
         sx={{
-          padding: "0px 8px 12px 8px",
+          padding: "0px 8px 8px 8px",
           display: "flex",
           flexDirection: collapsed ? "column" : "row",
           alignItems: "center",
@@ -297,6 +366,7 @@ export default function AppNavigation({
 
                 <Box
                   sx={{
+                    display: collapsed ? "none" : "block",
                     overflow: "hidden",
                     whiteSpace: "nowrap",
                     maxWidth: collapsed ? 0 : 200,
@@ -329,7 +399,7 @@ export default function AppNavigation({
                   openProductMenu(e);
                 }}
                 sx={{
-                  display: "grid",
+                  display: collapsed ? "none" : "grid",
                   placeItems: "center",
                   width: 28,
                   height: 28,
@@ -359,84 +429,86 @@ export default function AppNavigation({
           transformOrigin={{ vertical: "center", horizontal: "left" }}
           PaperProps={{
             sx: {
-              width: 300,
-              borderRadius: 3,
+              width: 380,
+              borderRadius: 4,
               boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
               overflow: "hidden",
-              p: 1,
+              p: 1.5,
+              border: "1px solid #eeeeee",
             },
           }}
         >
-          {/* Optional footer line like profile */}
           <Box sx={{ px: 1, pb: 1, pt: 1 }}>
-            <Typography sx={{ fontSize: 14, color: "rgba(0,0,0,0.35)" }}>
+            <Typography
+              sx={{ fontSize: 14, fontWeight: 600, color: "rgba(0,0,0,0.60)" }}
+            >
               Switch Product
             </Typography>
           </Box>
-          {/* Menu items (same row density / icon sizing) */}
+
           <List disablePadding>
-            {productOptions.map((p, idx) => {
+            {productOptions.map((p) => {
               const selected = p.id === activeProduct;
 
               return (
-                <React.Fragment key={p.id}>
-                  <ListItemButton
-                    sx={{ py: 1, px: 1 }}
-                    onClick={() => {
-                      setActiveProduct(p.id);
-                      closeProductMenu();
+                <ListItemButton
+                  key={p.id}
+                  sx={{ py: 1, px: 1 }}
+                  onClick={() => {
+                    setActiveProduct(p.id);
+                    closeProductMenu();
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 32,
+                      color: selected ? "#6f53ff" : "rgba(0,0,0,0.45)",
                     }}
                   >
-                    <ListItemIcon
+                    <Box
                       sx={{
-                        minWidth: 32,
-                        color: selected ? "#6f53ff" : "rgba(0,0,0,0.45)",
+                        width: 24,
+                        height: 24,
+                        borderRadius: 2,
+                        display: "grid",
+                        placeItems: "center",
                       }}
                     >
-                      <Box
-                        sx={{
-                          width: 24,
-                          height: 24,
-                          borderRadius: 2,
-                          display: "grid",
-                          placeItems: "center",
-                        }}
-                      >
-                        {p.icon}
-                      </Box>
-                    </ListItemIcon>
+                      {p.icon}
+                    </Box>
+                  </ListItemIcon>
 
-                    <ListItemText
-                      primary={p.label}
-                      primaryTypographyProps={{
+                  <ListItemText
+                    primary={p.label}
+                    primaryTypographyProps={{
+                      fontSize: 14,
+                      fontWeight: 500,
+                      color: "rgba(0,0,0,0.70)",
+                    }}
+                  />
+
+                  {selected && (
+                    <Chip
+                      label="Active"
+                      size="small"
+                      sx={{
                         fontSize: 14,
+                        bgcolor: "#E8F5E9",
+                        color: "#2E7D32",
                         fontWeight: 500,
-                        color: "rgba(0,0,0,0.70)",
                       }}
                     />
-
-                    {selected && (
-                      <Chip
-                        label="Active"
-                        size="small"
-                        sx={{
-                          fontSize: 14,
-                          bgcolor: "rgba(111,83,255,0.12)",
-                          color: "#6f53ff",
-                        }}
-                      />
-                    )}
-                  </ListItemButton>
-
-                  {idx !== productOptions.length - 1}
-                </React.Fragment>
+                  )}
+                </ListItemButton>
               );
             })}
           </List>
         </Popover>
       </Box>
 
-      <Divider sx={{ borderColor: "rgba(255,255,255,0.07)" }} />
+      <Divider
+        sx={{ borderColor: "rgba(255,255,255,0.1)", mb: collapsed ? 0 : 1 }}
+      />
 
       {/* Sections */}
       <Box sx={{ flex: 1, overflow: "auto" }}>
@@ -447,27 +519,23 @@ export default function AppNavigation({
           return (
             <Box key={section.title}>
               <Box sx={{ pl: 1, pr: 1 }}>
-                {/* Collapsible header (only meaningful when NOT collapsed) */}
                 {!collapsed && (
                   <ListItemButton
                     onClick={() => toggleSection(section.title)}
                     sx={{
-                      px: 1.25,
-                      py: 1,
-                      // mb: 0.25,
-                      mt: 1,
-                      borderRadius: 1.25,
+                      borderRadius: 1,
                       "&:hover": { bgcolor: "rgba(255,255,255,0.06)" },
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
+                      pl: 1,
+                      pr: 1,
                     }}
                   >
                     <Typography
                       sx={{
                         fontSize: 14,
-                        color: "rgba(255,255,255,)",
-                        // fontWeight: 600,
+                        color: "rgba(255,255,255, 0.70)",
                       }}
                     >
                       {section.title}
@@ -475,8 +543,8 @@ export default function AppNavigation({
 
                     <ExpandMore
                       sx={{
-                        fontSize: 18,
-                        color: "rgba(255,255,255,0.70)",
+                        fontSize: 20,
+                        color: "rgba(255,255,255, 0.70)",
                         transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                         transition: prefersReducedMotion
                           ? "none"
@@ -486,12 +554,11 @@ export default function AppNavigation({
                   </ListItemButton>
                 )}
 
-                {/* When collapsed sidebar: keep sections always expanded (tooltips are the “header”) */}
                 <Collapse
                   in={collapsed ? true : !!openSections[section.title]}
                   timeout={prefersReducedMotion ? 0 : 200}
                 >
-                  <List disablePadding>
+                  <List disablePadding sx={{ pb: 1, mt: collapsed ? 0 : 0.5 }}>
                     {section.items.map((item) => {
                       const Icon = item.icon;
 
@@ -499,17 +566,12 @@ export default function AppNavigation({
                         <ListItemButton
                           component={NavLink}
                           to={item.to}
-                          // Use NavLink state instead of manual pathname compare
                           sx={{
-                            px: collapsed ? 1 : 1.25,
+                            height: 40,
+                            alignItems: "center",
                             justifyContent: collapsed ? "center" : "flex-start",
-                            pt: 0.75,
-                            pb: 0.75,
-                            mb: 0.75,
-                            mt: 0.75,
-                            position: "relative",
-                            overflow: "hidden",
-                            borderRadius: 2,
+                            borderRadius: 1.5,
+                            mt: collapsed ? 1 : 0,
                             "&.active": {
                               bgcolor: "rgba(111,83,255,0.22)",
                             },
@@ -525,16 +587,15 @@ export default function AppNavigation({
                             sx={{
                               minWidth: 0,
                               mr: collapsed ? 0 : 1.5,
-                              width: 24,
-                              height: 24,
+                              width: 20,
+                              height: 20,
                               display: "grid",
                               placeItems: "center",
                             }}
                           >
                             <Icon
                               sx={{
-                                // fill: "url(#mainGradient)",
-                                color: "rgba(255,255,255,0.7)",
+                                color: "rgba(255,255,255)",
                                 width: 20,
                                 height: 20,
                               }}
@@ -547,7 +608,7 @@ export default function AppNavigation({
                               primaryTypographyProps={{
                                 fontSize: 14,
                                 fontWeight: 400,
-                                // color: "rgba(255,255,255,0.90)",
+                                color: "rgba(255,255,255)",
                               }}
                             />
                           )}
@@ -555,7 +616,13 @@ export default function AppNavigation({
                       );
 
                       return (
-                        <Box key={item.to}>
+                        <Box
+                          key={item.to}
+                          sx={{
+                            mb: 0.5,
+                            "&:last-of-type": { mb: 0 },
+                          }}
+                        >
                           {collapsed ? (
                             <Tooltip title={item.label} placement="right">
                               {button}
@@ -570,25 +637,18 @@ export default function AppNavigation({
                 </Collapse>
               </Box>
 
-              {/* Divider between sections ONLY (not after the last one) */}
               {collapsed && !isLast && (
-                <Divider sx={{ borderColor: "rgba(255,255,255,0.07)" }} />
+                <Divider sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
               )}
             </Box>
           );
         })}
       </Box>
 
-      <Divider sx={{ borderColor: "rgba(255,255,255,0.07)" }} />
+      <Divider sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
 
       {/*Profile*/}
-      <Box
-        sx={{
-          p: 1.25,
-          width: "100%",
-        }}
-      >
-        {/* Footer profile row (click to open) */}
+      <Box sx={{ p: 1.25, width: "100%" }}>
         {collapsed ? (
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Tooltip
@@ -659,32 +719,23 @@ export default function AppNavigation({
               </Avatar>
 
               <Box sx={{ minWidth: 0 }}>
-                <Box
+                <Typography
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    minWidth: 0,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: "rgba(255,255,255,0.92)",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: "rgba(255,255,255,0.92)",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {user.name}
-                  </Typography>
-                </Box>
+                  {user.name}
+                </Typography>
 
                 <Typography
                   sx={{
                     fontSize: 14,
-                    color: "rgba(255,255,255,0.68)",
+                    color: "rgba(255,255,255,0.80)",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
@@ -698,13 +749,12 @@ export default function AppNavigation({
             <IconButton
               disableRipple
               size="small"
-              sx={{
-                color: "rgba(255,255,255,0.75)",
-              }}
+              sx={{ color: "rgba(255,255,255,0.75)" }}
               aria-label="Open profile menu"
             >
               <ExpandMore
                 sx={{
+                  fontSize: 20,
                   transform: profileMenuOpen
                     ? "rotate(180deg)"
                     : "rotate(0deg)",
@@ -730,10 +780,10 @@ export default function AppNavigation({
               borderRadius: 3,
               boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
               overflow: "hidden",
+              border: "1px solid #eeeeee",
             },
           }}
         >
-          {/* Header */}
           <Box sx={{ p: 2, bgcolor: "background.paper" }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Avatar
@@ -750,17 +800,15 @@ export default function AppNavigation({
               </Avatar>
 
               <Box sx={{ minWidth: 0 }}>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography
-                    sx={{
-                      fontSize: 16,
-                      fontWeight: 500,
-                      color: "rgba(0,0,0,0.85)",
-                    }}
-                  >
-                    {user.name}
-                  </Typography>
-                </Box>
+                <Typography
+                  sx={{
+                    fontSize: 16,
+                    fontWeight: 500,
+                    color: "rgba(0,0,0,0.85)",
+                  }}
+                >
+                  {user.name}
+                </Typography>
 
                 <Typography sx={{ fontSize: 12, color: "rgba(0,0,0,0.45)" }}>
                   {user.organization}
@@ -771,9 +819,7 @@ export default function AppNavigation({
 
           <Divider sx={{ borderColor: "rgba(0,0,0,0.05)" }} />
 
-          {/* Menu items */}
           <List disablePadding>
-            {/* Dark mode row */}
             <ListItemButton
               disableRipple
               sx={{ py: 1 }}
@@ -804,7 +850,7 @@ export default function AppNavigation({
             <ListItemButton
               sx={{ py: 1 }}
               onClick={() => {
-                /* navigate("/settings") */ closeProfileMenu();
+                closeProfileMenu();
               }}
             >
               <ListItemIcon sx={{ minWidth: 32, color: "rgba(0,0,0,0.45)" }}>
@@ -815,6 +861,7 @@ export default function AppNavigation({
                 primaryTypographyProps={{
                   fontSize: 14,
                   fontWeight: 400,
+                  // NOTE: you had rgba(0,0,0,0) (invisible). Keeping your original would hide text.
                   color: "rgba(0,0,0,0.70)",
                 }}
               />
@@ -823,7 +870,7 @@ export default function AppNavigation({
             <ListItemButton
               sx={{ py: 1 }}
               onClick={() => {
-                /* open language */ closeProfileMenu();
+                closeProfileMenu();
               }}
             >
               <ListItemIcon sx={{ minWidth: 32, color: "rgba(0,0,0,0.45)" }}>
@@ -844,7 +891,7 @@ export default function AppNavigation({
             <ListItemButton
               sx={{ py: 1.6 }}
               onClick={() => {
-                /* logout */ closeProfileMenu();
+                closeProfileMenu();
               }}
             >
               <ListItemIcon sx={{ minWidth: 32, color: "#E53935" }}>
