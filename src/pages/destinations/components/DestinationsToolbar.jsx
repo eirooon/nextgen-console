@@ -30,7 +30,7 @@ export default function DestinationsToolbar() {
   const { selectedId } = useOutletContext();
 
   const subRouteIdToLabel = Object.fromEntries(
-    Object.values(subRoutes).map((r) => [r.id, r.label])
+    Object.values(subRoutes).map((r) => [r.id, r.label]),
   );
   const context =
     (subRouteIdToLabel[selectedId] ?? "").replace(/^All\s+/i, "") || null;
@@ -66,9 +66,6 @@ export default function DestinationsToolbar() {
             </InputAdornment>
           }
         />
-        <Button variant="outlined" color="secondary">
-          Filters
-        </Button>
       </Box>
 
       <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>

@@ -128,9 +128,6 @@ export default function EventLogs() {
               size="small"
               placeholder="Search jobs"
             />
-            <Button variant="outlined" color="secondary">
-              Filters
-            </Button>
           </Box>
           <Box
             sx={{

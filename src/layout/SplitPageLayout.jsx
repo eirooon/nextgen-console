@@ -4,7 +4,7 @@ export default function SplitPageLayout({
   items = [], // [{ id, label, count }]
   selectedId,
   onSelect,
-  leftWidth = 280, // px
+  leftWidth = 240, // px
   children, // right panel content
 }) {
   const formatCount = (count) => {
@@ -29,7 +29,7 @@ export default function SplitPageLayout({
             p: 0.75,
           }}
         >
-          <List disablePadding sx={{ p: 1 }}>
+          <List disablePadding sx={{ p: 0.5 }}>
             {items.map((item) => {
               const active = item.id === selectedId;
 
@@ -47,11 +47,9 @@ export default function SplitPageLayout({
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    gap: 1.5,
-                    pr: 1.5,
-                    pl: 1.5,
-                    pt: 1,
-                    pb: 1,
+                    gap: 2,
+                    p: 1,
+                    borderRadius: 1.5,
                   }}
                 >
                   <ListItemText
@@ -59,7 +57,6 @@ export default function SplitPageLayout({
                     sx={{ m: 0, flex: 1, minWidth: 0 }}
                     primaryTypographyProps={{
                       fontSize: 14,
-                      // allow wrapping, but no overlap now
                     }}
                   />
 

@@ -34,7 +34,7 @@ export default function SourcesToolbar() {
   const { selectedId } = useOutletContext();
 
   const subRouteIdToLabel = Object.fromEntries(
-    Object.values(subRoutes).map((r) => [r.id, r.label])
+    Object.values(subRoutes).map((r) => [r.id, r.label]),
   );
   const context =
     (subRouteIdToLabel[selectedId] ?? "").replace(/^All\s+/i, "") || null;

@@ -16,7 +16,6 @@ import {
   SearchOutlined,
   ArrowDropDown,
   SettingsOutlined,
-  AddOutlined,
 } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -120,9 +119,6 @@ export default function Jobs() {
               size="small"
               placeholder="Search jobs"
             />
-            <Button variant="outlined" color="secondary">
-              Filters
-            </Button>
           </Box>
           <Box
             sx={{

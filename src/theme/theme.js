@@ -58,20 +58,10 @@ export const theme = createTheme({
       },
     },
 
-    MuiListItemButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 8,
-          paddingTop: 8,
-          paddingBottom: 8,
-        },
-      },
-    },
-
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          borderRadius: 6,
+          borderRadius: 4,
         },
       },
     },

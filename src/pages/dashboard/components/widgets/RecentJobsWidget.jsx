@@ -3,11 +3,11 @@ import {
   Box,
   Typography,
   Stack,
-  Button,
   Divider,
   Pagination,
   IconButton,
-  CircularProgress,
+  Link,
+  LinearProgress,
 } from "@mui/material";
 import {
   ChevronLeftRounded,
@@ -43,29 +43,21 @@ export default function RecentJobsWidget({
   const handlePrev = () => setPage((p) => Math.max(1, p - 1));
   const handleNext = () => setPage((p) => Math.min(totalPages, p + 1));
 
-  const CustomProgress = ({ value }) => {
-    return (
-      <Box sx={{ position: "relative", display: "inline-flex" }}>
-        <CircularProgress
-          variant="determinate"
-          sx={{
-            color: (theme) => theme.palette.grey[200],
-          }}
-          size={36}
-          thickness={6}
-          value={100}
-        />
+  const CustomProgress = ({ value, height = 4 }) => {
+    const v = Math.max(0, Math.min(100, Number(value) || 0));
 
-        {/* Foreground Circle (Blue progress) */}
-        <CircularProgress
+    return (
+      <Box sx={{ width: "100%" }}>
+        <LinearProgress
           variant="determinate"
-          value={value}
-          size={36}
-          thickness={6}
+          value={v}
           sx={{
-            color: "#2962FF",
-            position: "absolute",
-            left: 0,
+            height,
+            borderRadius: 999,
+            bgcolor: (theme) => theme.palette.grey[200],
+            "& .MuiLinearProgress-bar": {
+              borderRadius: 999,
+            },
           }}
         />
       </Box>
@@ -77,9 +69,10 @@ export default function RecentJobsWidget({
       <Box
         sx={{
           border: "1px solid rgba(0,0,0,0.08)",
-          borderRadius: 3,
+          borderRadius: 2,
           overflow: "hidden",
           bgcolor: "background.paper",
+          minHeight: "360px",
         }}
       >
         {pageItems.length === 0 ? (
@@ -100,45 +93,39 @@ export default function RecentJobsWidget({
               <React.Fragment key={key}>
                 <Box
                   sx={{
-                    p: 2,
                     display: "grid",
-                    gridTemplateColumns: "28px 1fr auto",
-                    alignItems: "start",
+                    gridTemplateColumns: "1fr auto",
+                    alignItems: "center",
                     columnGap: 2,
+                    pr: 2,
+                    pl: 2,
+                    pt: 1,
+                    pb: 1,
                   }}
                 >
-                  {/* severity dot */}
-                  <Box
-                    sx={{
-                      p: 0,
-                      mt: 0.5,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignContent: "center",
-                    }}
-                  >
-                    <CustomProgress value={item?.progressValue ?? 0} />
-                  </Box>
-
-                  {/* text */}
-                  <Box>
-                    <Typography
+                  <Box sx={{ minWidth: 0 }}>
+                    <Link
                       variant="body2"
-                      sx={{ fontWeight: 600, lineHeight: 1.2, mb: 0.75 }}
+                      sx={{ fontWeight: 600, lineHeight: 2 }}
+                      color="secondary"
+                      href="#"
+                      underline="none"
                     >
                       {item?.jobName}
-                    </Typography>
+                    </Link>
+
+                    <CustomProgress value={item?.progressValue ?? 0} />
+
                     <Typography
                       variant="body2"
-                      sx={{ color: "text.secondary" }}
+                      sx={{ color: "text.secondary", mt: 0.5 }}
                     >
-                      {item?.jobType} • {item?.time}
+                      {item?.progressValue}% • {item?.jobType} • {item?.time}
                     </Typography>
                   </Box>
 
-                  {/* action */}
-                  <Box sx={{ pt: 0.4 }}>
-                    <IconButton aria-label="previous page" size="small">
+                  <Box sx={{ pt: 0.4, justifySelf: "end" }}>
+                    <IconButton aria-label="more" size="small">
                       <MoreVert />
                     </IconButton>
                   </Box>

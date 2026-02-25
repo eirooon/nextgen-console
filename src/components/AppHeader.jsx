@@ -1,4 +1,11 @@
-import { AppBar, Toolbar, IconButton, Box, Button } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Box,
+  Button,
+  Divider,
+} from "@mui/material";
 import {
   AutoAwesomeRounded,
   Notifications,
@@ -29,7 +36,7 @@ export default function AppHeader({ height = 64, sx }) {
           <AppBreadcrumbs />
         </Box>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
           <Button
             variant="contained"
             startIcon={<AutoAwesomeRounded />}

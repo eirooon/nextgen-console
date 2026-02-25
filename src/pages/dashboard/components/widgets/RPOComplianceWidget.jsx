@@ -1,10 +1,9 @@
 import CardWidget from "../../../../components/CardWidget";
-import DonutChart from "../DonutChart";
+import SharedDonutChart from "../SharedDonutChart";
 
 const DEFAULT_COLORS = {
   compliant: "#00C853",
   notCompliant: "#FF1744",
-  approvedExceptions: "#78909C",
 };
 
 export default function RPOComplianceWidget({
@@ -33,21 +32,15 @@ export default function RPOComplianceWidget({
       value: data?.notCompliant ?? 0,
       color: colors.notCompliant,
     },
-    {
-      id: "approvedExceptions",
-      label: `Approved Exceptions (${data?.approvedExceptions ?? 0})`,
-      value: data?.approvedExceptions ?? 0,
-      color: colors.approvedExceptions,
-    },
   ].filter((item) => item.value > 0);
 
   return (
     <CardWidget title={title} description={description}>
-      <DonutChart
+      <SharedDonutChart
         data={chartData}
         centerValue={`${complianceRate}%`}
         centerValueColor={colors.compliant}
-        centerSubtext="compliant within 3 days"
+        centerSubtext="Compliant within 3 days"
       />
     </CardWidget>
   );

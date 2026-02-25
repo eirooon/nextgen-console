@@ -507,11 +507,10 @@ export default function AppNavigation({
       </Box>
 
       <Divider
-        sx={{ borderColor: "rgba(255,255,255,0.1)", mb: collapsed ? 0 : 1 }}
+        sx={{ borderColor: "rgba(255,255,255,0.1)", mt: collapsed ? 0 : 1 }}
       />
 
-      {/* Sections */}
-      <Box sx={{ flex: 1, overflow: "auto" }}>
+      <Box sx={{ flex: 1, overflow: "auto", mt: collapsed ? 0 : 1 }}>
         {navSections.map((section, sectionIndex) => {
           const isLast = sectionIndex === navSections.length - 1;
           const isOpen = !!openSections[section.title];

@@ -1,5 +1,5 @@
 import CardWidget from "../../../../components/CardWidget";
-import DonutChart from "../DonutChart";
+import SharedDonutChart from "../SharedDonutChart";
 
 const DEFAULT_COLORS = {
   deployed: "#00C853",
@@ -50,12 +50,12 @@ export default function PlanStatusWidget({
 
   return (
     <CardWidget title={title} description={description}>
-      <DonutChart
+      <SharedDonutChart
         data={chartData}
         centerLabel="Deployed Rate"
         centerValue={`${deployedRate}%`}
         centerValueColor={colors.deployed}
-        centerSubtext="deployed successfully"
+        centerSubtext="Successful Deployment"
       />
     </CardWidget>
   );

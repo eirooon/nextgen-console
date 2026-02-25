@@ -1,5 +1,5 @@
 import CardWidget from "../../../../components/CardWidget";
-import DonutChart from "../DonutChart";
+import SharedDonutChart from "../SharedDonutChart";
 
 const DEFAULT_COLORS = {
   success: "#00C853",
@@ -50,12 +50,12 @@ export default function JobHealthStatusWidget({
 
   return (
     <CardWidget title={title} description={description}>
-      <DonutChart
+      <SharedDonutChart
         data={chartData}
         centerLabel="Success Rate"
         centerValue={`${successRate}%`}
         centerValueColor={colors.success}
-        centerSubtext="completed successfully"
+        centerSubtext="Successful Jobs"
       />
     </CardWidget>
   );

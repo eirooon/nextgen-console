@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Box, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
 
-export default function DonutChartLayout({
+export default function SharedDonutChart({
   data,
   centerValue,
   centerSubtext,
@@ -116,7 +116,7 @@ export default function DonutChartLayout({
   );
 }
 
-DonutChartLayout.propTypes = {
+SharedDonutChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

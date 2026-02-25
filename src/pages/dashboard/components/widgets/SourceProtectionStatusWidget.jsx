@@ -1,5 +1,5 @@
 import CardWidget from "../../../../components/CardWidget";
-import DonutChart from "../DonutChart";
+import SharedDonutChart from "../SharedDonutChart";
 
 const DEFAULT_COLORS = {
   success: "#00C853",
@@ -57,11 +57,11 @@ export default function SourceProtectionStatusWidget({
 
   return (
     <CardWidget title={title} description={description}>
-      <DonutChart
+      <SharedDonutChart
         data={chartData}
         centerValue={`${successRate}%`}
         centerValueColor={colors.success}
-        centerSubtext="last backup successfully"
+        centerSubtext="Successful Last Backups"
       />
     </CardWidget>
   );
