@@ -22,6 +22,14 @@ export default function CardWidget({
         title={title}
         action={action}
         subheader={description}
+        titleTypographyProps={{
+          sx: {
+            display: "-webkit-box",
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          },
+        }}
       ></CardHeader>
       <CardContent sx={{ ...contentSx }}>{children}</CardContent>
     </Card>

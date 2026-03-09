@@ -128,7 +128,7 @@ StorageMiniCard.propTypes = {
   icon: PropTypes.node,
 };
 
-function UdpDataStoresRow({ valueText }) {
+function UdpDataStoresRow({ valueText, ldsIcon }) {
   return (
     <Box
       sx={{
@@ -154,7 +154,7 @@ function UdpDataStoresRow({ valueText }) {
                   flex: "0 0 auto",
                 }}
               >
-                <StorageOutlinedIcon sx={{ color: "grey.700" }} />
+                {ldsIcon}
               </Box>
             </Grid>
 
@@ -194,6 +194,7 @@ export default function StorageCapacityWatchWidget({
   description,
   data,
   udpValueText,
+  ldsIcon,
 }) {
   return (
     <CardWidget title={title} description={description}>
@@ -205,7 +206,7 @@ export default function StorageCapacityWatchWidget({
         ))}
       </Grid>
 
-      <UdpDataStoresRow valueText={udpValueText} />
+      <UdpDataStoresRow ldsIcon={ldsIcon} valueText={udpValueText} />
     </CardWidget>
   );
 }

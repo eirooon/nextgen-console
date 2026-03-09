@@ -1,4 +1,4 @@
-import { Grid, Typography, Stack, Link } from "@mui/material";
+import { Grid, Typography, Stack, Link, SvgIcon } from "@mui/material";
 import SourceProtectionStatusWidget from "./components/widgets/SourceProtectionStatusWidget";
 import RPOComplianceWidget from "./components/widgets/RPOComplianceWidget";
 import AIAnomalyDetectionJobsSummaryWidget from "./components/widgets/AIAnomalyDetectionJobsSummaryWidget";
@@ -10,8 +10,23 @@ import LatestRecoveryPointsWidget from "./components/widgets/LatestRecoveryPoint
 import OldestRecoveryPointsWidget from "./components/widgets/OldestRecoveryPointsWidget";
 import StorageCapacityWatchWidget from "./components/widgets/StorageCapacityWatchWidget";
 
-import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import AcrsIcon from "../../assets/acrs-encrypted.svg?react";
+import AccrsIcon from "../../assets/accrs-encrypted.svg?react";
+import AcsIcon from "../../assets/acs-encrypted.svg?react";
+import LdsIcon from "../../assets/lds-encrypted.svg?react";
+
+const ACCRS = (props) => {
+  return <SvgIcon component={AccrsIcon} inheritViewBox {...props} />;
+};
+const ACRS = (props) => {
+  return <SvgIcon component={AcrsIcon} inheritViewBox {...props} />;
+};
+const ACS = (props) => {
+  return <SvgIcon component={AcsIcon} inheritViewBox {...props} />;
+};
+const LDS = (props) => {
+  return <SvgIcon component={LdsIcon} inheritViewBox {...props} />;
+};
 
 export default function DashboardLayout() {
   const sourceProtectionData = {
@@ -36,6 +51,7 @@ export default function DashboardLayout() {
     { label: "Scan Failed", value: 2, color: "#e65100", bgColor: "#fff7ed" },
     { label: "In Progress", value: 20, color: "#0d47a1", bgColor: "#eff6ff" },
   ];
+
   const storageData = [
     {
       key: "acrs",
@@ -46,7 +62,7 @@ export default function DashboardLayout() {
       availableText: "949.79 GB Available",
       percent: 50,
       barColor: "#00C853",
-      icon: <SecurityOutlinedIcon sx={{ color: "grey.700" }} />,
+      icon: <ACRS sx={{ color: "grey.700" }} />,
     },
     {
       key: "acs",
@@ -57,7 +73,7 @@ export default function DashboardLayout() {
       availableText: "100 GB Available",
       percent: 90,
       barColor: "#FFAB00",
-      icon: <CloudOutlinedIcon sx={{ color: "grey.700" }} />,
+      icon: <ACS sx={{ color: "grey.700" }} />,
     },
     {
       key: "accrs",
@@ -68,7 +84,7 @@ export default function DashboardLayout() {
       excessText: "1.78 TB Excess Storage",
       percent: 100,
       barColor: "#D50000",
-      icon: <SecurityOutlinedIcon sx={{ color: "grey.700" }} />,
+      icon: <ACCRS sx={{ color: "grey.700" }} />,
     },
   ];
 
@@ -221,6 +237,7 @@ export default function DashboardLayout() {
           description="Current used vs available storage across each storage destination/pool"
           data={storageData}
           udpValueText="761.42 GB"
+          ldsIcon={<LDS sx={{ color: "grey.700" }} />}
         />
       </Grid>
       <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>

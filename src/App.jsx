@@ -2,7 +2,7 @@ import { Navigate, Route, Routes, Outlet } from "react-router-dom";
 import AppShell from "./layout/AppShell";
 
 import Dashboard from "./pages/dashboard/DashboardLayout";
-import Jobs from "./pages/jobs/Jobs";
+import JobsLayout from "./pages/jobs/JobsLayout";
 import EventLogs from "./pages/eventlogs/EventLogs";
 import AlertRulesLayout from "./pages/alertrules/AlertRulesLayout";
 import AuditLogsLayout from "./pages/auditlogs/AuditLogsLayout";
@@ -75,7 +75,7 @@ export default function App() {
 
         {/* Top-level pages */}
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/jobs" element={<Jobs />} />
+        <Route path="/jobs" element={<JobsLayout />} />
         <Route path="/event-logs" element={<EventLogs />} />
         <Route path="/alert-rules" element={<AlertRulesLayout />} />
         <Route path="/audit-logs" element={<AuditLogsLayout />} />

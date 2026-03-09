@@ -4,14 +4,14 @@ import {
   CorporateFare,
   EventNote,
   FmdGood,
-  InsertChart,
   LibraryBooks,
   Monitor,
   NotificationAdd,
   PublishedWithChanges,
   VerifiedUser,
   Settings,
-  SupportAgent,
+  Help,
+  BarChart,
 } from "@mui/icons-material";
 
 export const navSections = [
@@ -23,7 +23,7 @@ export const navSections = [
       //   to: "/resiliencecenter",
       //   icon: LocalPolice,
       // },
-      { label: "Dashboard", to: "/dashboard", icon: InsertChart },
+      { label: "Dashboard", to: "/dashboard", icon: BarChart },
     ],
   },
   {
@@ -72,7 +72,7 @@ export const navSections = [
     title: "Admin & Support",
     items: [
       { label: "Settings", to: "/settings", icon: Settings },
-      { label: "Support", to: "/support", icon: SupportAgent },
+      { label: "Support", to: "/support", icon: Help },
     ],
   },
 ];

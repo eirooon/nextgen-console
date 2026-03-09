@@ -17,15 +17,13 @@ import {
   Collapse,
   Chip,
   Switch,
+  SvgIcon,
 } from "@mui/material";
 
 import {
-  VerifiedUser,
   UnfoldMore,
   KeyboardDoubleArrowLeftRounded,
   KeyboardDoubleArrowRightRounded,
-  CloudUpload,
-  HelpRounded,
   ExpandMore,
   DarkModeOutlined,
   TranslateOutlined,
@@ -36,6 +34,16 @@ import {
 import { navSections } from "../data/nav";
 import arcserveLogoFull from "../assets/arcserve-full-logo.svg";
 import arcserveLogoSmall from "../assets/arcserve-small-logo.svg";
+
+import UdpIcon from "../assets/logo-udp.svg?react";
+import CloudDirectIcon from "../assets/logo-cloud-direct.svg?react";
+
+const UDP = (props) => {
+  return <SvgIcon component={UdpIcon} inheritViewBox {...props} />;
+};
+const CloudDirect = (props) => {
+  return <SvgIcon component={CloudDirectIcon} inheritViewBox {...props} />;
+};
 
 // LocalStorage helpers
 const STORAGE_KEY = "appNavigationState:v1";
@@ -65,17 +73,12 @@ export default function AppNavigation({
       {
         id: "udp",
         label: "Unified Data Protection (UDP)",
-        icon: <VerifiedUser sx={{ color: "rgba(255, 213, 0, 1)" }} />,
+        icon: <UDP />,
       },
       {
         id: "cloud",
         label: "Cloud Direct",
-        icon: <CloudUpload sx={{ color: "rgb(19, 157, 9)" }} />,
-      },
-      {
-        id: "shadow",
-        label: "ShadowProtect",
-        icon: <HelpRounded sx={{ color: "rgb(36, 203, 225)" }} />,
+        icon: <CloudDirect />,
       },
     ],
     [],
@@ -401,8 +404,8 @@ export default function AppNavigation({
                 sx={{
                   display: collapsed ? "none" : "grid",
                   placeItems: "center",
-                  width: 28,
-                  height: 28,
+                  width: 24,
+                  height: 24,
                   borderRadius: 1,
                   color: "rgba(255,255,255,0.85)",
                   flex: "0 0 auto",
@@ -414,7 +417,7 @@ export default function AppNavigation({
                 }}
                 aria-label="Open product switcher"
               >
-                <UnfoldMore />
+                <UnfoldMore sx={{ width: 20, height: 20 }} />
               </Box>
             </Box>
           </Tooltip>
@@ -453,7 +456,7 @@ export default function AppNavigation({
               return (
                 <ListItemButton
                   key={p.id}
-                  sx={{ py: 1, px: 1 }}
+                  sx={{ py: 1, px: 1, borderRadius: 2 }}
                   onClick={() => {
                     setActiveProduct(p.id);
                     closeProductMenu();
@@ -463,6 +466,7 @@ export default function AppNavigation({
                     sx={{
                       minWidth: 32,
                       color: selected ? "#6f53ff" : "rgba(0,0,0,0.45)",
+                      alignItems: "center",
                     }}
                   >
                     <Box
@@ -557,7 +561,7 @@ export default function AppNavigation({
                   in={collapsed ? true : !!openSections[section.title]}
                   timeout={prefersReducedMotion ? 0 : 200}
                 >
-                  <List disablePadding sx={{ pb: 1, mt: collapsed ? 0 : 0.5 }}>
+                  <List disablePadding sx={{ mt: 1, mb: 1 }}>
                     {section.items.map((item) => {
                       const Icon = item.icon;
 
@@ -570,7 +574,7 @@ export default function AppNavigation({
                             alignItems: "center",
                             justifyContent: collapsed ? "center" : "flex-start",
                             borderRadius: 1.5,
-                            mt: collapsed ? 1 : 0,
+                            "&:first-of-type": { mt: collapsed ? 0 : 0.5 },
                             "&.active": {
                               bgcolor: "rgba(111,83,255,0.22)",
                             },
