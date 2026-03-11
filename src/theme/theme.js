@@ -3,20 +3,45 @@ import { createTheme } from "@mui/material/styles";
 export const ARC_NAV_BG = "#001A70";
 
 export const theme = createTheme({
-  palette: {
-    mode: "light",
-    background: { default: "#f6f7fb", paper: "#ffffff" },
-    primary: {
-      light: "#BB86FC",
-      main: "#8A2BFF",
-      dark: "#640FCD",
-      contrastText: "#fff",
+  colorSchemes: {
+    light: {
+      palette: {
+        background: { default: "#f6f7fb", paper: "#ffffff" },
+        primary: {
+          light: "#BB86FC",
+          main: "#8A2BFF",
+          dark: "#640FCD",
+          contrastText: "#FFFFFF",
+        },
+        secondary: {
+          light: "#66C8E9",
+          main: "#00729A",
+          dark: "#0A5F7C",
+          contrastText: "#FFFFFF",
+        },
+      },
     },
-    secondary: {
-      light: "#66C8E9",
-      main: "#00729A",
-      dark: "#0A5F7C",
-      contrastText: "#FFFFFF",
+    dark: {
+      palette: {
+        background: { default: "#121212", paper: "#1e1e1e" },
+        primary: {
+          // We swap the 'light' color to become the 'main' for dark mode
+          main: "#BB86FC",
+          light: "#D7B7FD",
+          dark: "#8A2BFF",
+          contrastText: "rgba(0, 0, 0, 0.87)", // Dark text on light primary
+        },
+        secondary: {
+          main: "#66C8E9",
+          light: "#99DFF4",
+          dark: "#00729A",
+          contrastText: "rgba(0, 0, 0, 0.87)",
+        },
+        text: {
+          primary: "#ffffff",
+          secondary: "rgba(255, 255, 255, 0.7)",
+        },
+      },
     },
   },
   typography: {

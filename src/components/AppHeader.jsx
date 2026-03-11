@@ -1,11 +1,4 @@
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Box,
-  Button,
-  Divider,
-} from "@mui/material";
+import { AppBar, Toolbar, IconButton, Box, Button } from "@mui/material";
 import {
   AutoAwesomeRounded,
   Notifications,

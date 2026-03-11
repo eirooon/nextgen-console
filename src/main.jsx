@@ -8,7 +8,7 @@ import "@fontsource/inter/latin.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} defaultMode="light">
       <CssBaseline />
       <HashRouter>
         <App />
